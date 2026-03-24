@@ -1,0 +1,34 @@
+[
+  {
+    "id": "o1",
+    "name": "CodeStorm Hackathon",
+    "date": "April 06, 2026",
+    "level": "Intermediate",
+    "location": "Mumbai, India",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "o2",
+    "name": "Web3 Build Sprint",
+    "date": "April 19, 2026",
+    "level": "Advanced",
+    "location": "Online",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "o3",
+    "name": "AI Product Challenge",
+    "date": "May 02, 2026",
+    "level": "Beginner",
+    "location": "Bangalore, India",
+    "difficulty": "Beginner"
+  },
+  {
+    "id": "o4",
+    "name": "Summer Internship Drive",
+    "date": "May 15, 2026",
+    "level": "Intermediate",
+    "location": "Delhi, India",
+    "difficulty": "Intermediate"
+  }
+]

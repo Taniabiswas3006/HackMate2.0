@@ -1,0 +1,26 @@
+[
+  {
+    "id": "r1",
+    "skill": "JavaScript Fundamentals",
+    "description": "Master ES6+, async patterns, and DOM manipulation.",
+    "status": "Completed"
+  },
+  {
+    "id": "r2",
+    "skill": "React Core",
+    "description": "Build component-driven UIs with hooks and reusable architecture.",
+    "status": "In Progress"
+  },
+  {
+    "id": "r3",
+    "skill": "Backend APIs",
+    "description": "Create RESTful services with authentication and validation.",
+    "status": "Not Started"
+  },
+  {
+    "id": "r4",
+    "skill": "System Design Basics",
+    "description": "Understand scalability, caching, and distributed systems.",
+    "status": "Not Started"
+  }
+]
