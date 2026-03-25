@@ -31,8 +31,8 @@ async function signup(req, res) {
     }
 
     // Check if user exists
-    const [existing] = await pool.query("SELECT id FROM users WHERE email = ?", [email]);
-    if (existing.length > 0) {
+    const existing = await pool.query("SELECT id FROM users WHERE email = $1", [email]);
+    if (existing.rows.length > 0) {
       return res.status(400).json({ success: false, message: "Email already exists." });
     }
 
@@ -41,16 +41,12 @@ async function signup(req, res) {
 
     // Insert user
     const branch = department;
-    const [result] = await pool.query(
-      "INSERT INTO users (name, email, password, phone, gender, branch, department, year, interests) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    const result = await pool.query(
+      "INSERT INTO users (name, email, password, phone, gender, branch, department, year, interests) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
       [name, email, hashedPassword, phone, gender, branch, department, year, JSON.stringify(interests || [])]
     );
 
-    const newUserId = result.insertId;
-
-    // Get the newly created user
-    const [userRows] = await pool.query("SELECT * FROM users WHERE id = ?", [newUserId]);
-    const user = userRows[0];
+    const user = result.rows[0];
 
     const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, {
       expiresIn: "7d",
@@ -83,8 +79,8 @@ async function login(req, res) {
     const isDemoCredentials = email === DEMO_EMAIL && password === DEMO_PASSWORD;
 
     // Search user in database
-    const [userRows] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
-    if (userRows.length === 0) {
+    const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+    if (result.rows.length === 0) {
       if (isDemoCredentials) {
         const demoUser = {
           id: 0,
@@ -106,7 +102,7 @@ async function login(req, res) {
       return res.status(401).json({ success: false, message: "Invalid email or password." });
     }
 
-    const user = userRows[0];
+    const user = result.rows[0];
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
@@ -165,14 +161,14 @@ async function me(req, res) {
     const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, JWT_SECRET);
 
-    const [userRows] = await pool.query("SELECT * FROM users WHERE id = ?", [decoded.userId]);
-    if (userRows.length === 0) {
+    const result = await pool.query("SELECT * FROM users WHERE id = $1", [decoded.userId]);
+    if (result.rows.length === 0) {
       return res.status(404).json({ success: false, message: "User not found." });
     }
 
     res.status(200).json({
       success: true,
-      user: formatUser(userRows[0]),
+      user: formatUser(result.rows[0]),
     });
   } catch (error) {
     console.error("Auth Me Error:", error.message);
@@ -197,15 +193,15 @@ async function updateProfile(req, res) {
         const department = branch;
         
         await pool.query(
-            "UPDATE users SET name = ?, branch = ?, department = ?, year = ?, interests = ? WHERE id = ?",
+            "UPDATE users SET name = $1, branch = $2, department = $3, year = $4, interests = $5 WHERE id = $6",
             [name, branch, department, year, JSON.stringify(interests || []), decoded.userId]
         );
 
-        const [userRows] = await pool.query("SELECT * FROM users WHERE id = ?", [decoded.userId]);
+        const result = await pool.query("SELECT * FROM users WHERE id = $1", [decoded.userId]);
         
         res.status(200).json({
             success: true,
-            user: formatUser(userRows[0])
+            user: formatUser(result.rows[0])
         });
 
     } catch (error) {

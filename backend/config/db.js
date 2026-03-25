@@ -1,16 +1,12 @@
-const mysql = require("mysql2/promise");
+const { Pool } = require("pg");
 require("dotenv").config();
 
-// Create a connection pool for better performance and connection reuse
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_NAME || "hackmate",
-  port: process.env.DB_PORT || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+// Create a connection pool for Supabase PostgreSQL
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false // Required for Supabase
+  }
 });
 
 /**
@@ -18,15 +14,14 @@ const pool = mysql.createPool({
  */
 async function testConnection() {
   try {
-    const connection = await pool.getConnection();
-    console.log("MySQL connected successfully");
-    connection.release();
+    const client = await pool.connect();
+    const result = await client.query('SELECT NOW()');
+    console.log("✓ PostgreSQL (Supabase) connected successfully");
+    console.log(`  Current time: ${result.rows[0].now}`);
+    client.release();
     return true;
   } catch (error) {
-    console.error("MySQL connection failed:", error?.message || error);
-    if (error && error.code) {
-      console.error("MySQL error code:", error.code);
-    }
+    console.error("✗ PostgreSQL connection failed:", error?.message || error);
     return false;
   }
 }

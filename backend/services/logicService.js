@@ -67,19 +67,19 @@ function getEvents(interests, level) {
  */
 async function getPeers(interests, currentUserId) {
   try {
-    // Query users where interests JSON contains at least one matching interest
-    const placeholders = interests.map(() => '?').join(',');
+    // Query users where interests JSONB contains at least one matching interest
+    // PostgreSQL equivalent: use @> operator for JSONB containment or ANY for array matching
     const query = `
       SELECT id, name, email, phone, gender, branch, department, year, interests
       FROM users
-      WHERE id != ? AND JSON_OVERLAPS(interests, JSON_ARRAY(${placeholders}))
+      WHERE id != $1 AND interests ?| $2::text[]
     `;
-    const params = [currentUserId, ...interests];
+    const params = [currentUserId, interests];
 
-    const [rows] = await pool.query(query, params);
+    const result = await pool.query(query, params);
 
     // Format the results similar to formatUser in authController
-    return rows.map(user => ({
+    return result.rows.map(user => ({
       id: user.id,
       name: user.name,
       email: user.email,

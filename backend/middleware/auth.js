@@ -16,11 +16,11 @@ const authenticateToken = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    const [userRows] = await pool.query("SELECT * FROM users WHERE id = ?", [decoded.userId]);
-    if (userRows.length === 0) {
+    const result = await pool.query("SELECT * FROM users WHERE id = $1", [decoded.userId]);
+    if (result.rows.length === 0) {
       return res.status(401).json({ success: false, message: "User not found." });
     }
-    req.user = userRows[0];
+    req.user = result.rows[0];
     next();
   } catch (error) {
     return res.status(403).json({ success: false, message: "Invalid token." });

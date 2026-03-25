@@ -13,16 +13,16 @@ async function getUserProfile(req, res) {
       return res.status(400).json({ success: false, message: "Cannot view your own profile here" });
     }
 
-    const [userRows] = await pool.query(
-      "SELECT id, name, branch, department, year, interests FROM users WHERE id = ?",
+    const result = await pool.query(
+      "SELECT id, name, branch, department, year, interests FROM users WHERE id = $1",
       [userId]
     );
 
-    if (userRows.length === 0) {
+    if (result.rows.length === 0) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    const user = userRows[0];
+    const user = result.rows[0];
 
     // Format user data
     const formattedUser = {
