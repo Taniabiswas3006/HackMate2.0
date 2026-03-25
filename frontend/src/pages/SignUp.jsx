@@ -62,7 +62,7 @@ function SignUp() {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         if (formData.password !== formData.confirmPassword) {
             setError('Passwords do not match')
@@ -77,13 +77,16 @@ function SignUp() {
             return
         }
         const { confirmPassword, ...userData } = formData
-        const success = signup({
-            ...userData,
-            branch: userData.department,
-            year: `${userData.year}${userData.year === '1' ? 'st' : userData.year === '2' ? 'nd' : userData.year === '3' ? 'rd' : 'th'} Year`,
-        })
-        if (success) {
+        
+        try {
+            await signup({
+                ...userData,
+                branch: userData.department,
+                year: `${userData.year}${userData.year === '1' ? 'st' : userData.year === '2' ? 'nd' : userData.year === '3' ? 'rd' : 'th'} Year`,
+            })
             navigate('/dashboard')
+        } catch (err) {
+            setError(err.message || 'Failed to sign up')
         }
     }
 

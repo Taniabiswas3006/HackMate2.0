@@ -18,17 +18,17 @@ function SignIn() {
         setError('')
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         if (!formData.email || !formData.password) {
             setError('Please fill in all fields')
             return
         }
-        const success = login(formData.email, formData.password)
-        if (success) {
+        try {
+            await login(formData.email, formData.password)
             navigate('/dashboard')
-        } else {
-            setError('Invalid credentials')
+        } catch (err) {
+            setError(err.message || 'Invalid credentials')
         }
     }
 

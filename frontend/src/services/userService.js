@@ -1,7 +1,4 @@
 import api from './api.js'
-import usersData from '../data/users.json'
-
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 /**
  * Fetch suggested peers from the backend via recommendation endpoint.
@@ -9,8 +6,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
  */
 export async function getSuggestedPeers(branch, year, interests) {
   if (!branch || !year || !interests || interests.length === 0) {
-    await delay(250)
-    return usersData.peers
+    return []
   }
 
   try {
@@ -18,13 +14,9 @@ export async function getSuggestedPeers(branch, year, interests) {
     if (data.success && data.peers) {
       return data.peers
     }
-    return usersData.peers
+    return []
   } catch {
-    return usersData.peers
+    return []
   }
 }
 
-export async function getCurrentUser() {
-  await delay(250)
-  return usersData.currentUser
-}

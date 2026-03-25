@@ -32,7 +32,7 @@ async function explain(req, res) {
     console.error("❌ Error in /ai/explain:", error.message);
     return res.status(503).json({
       success: false,
-      message: FALLBACK_MSG,
+      message: error.message || FALLBACK_MSG,
     });
   }
 }
@@ -67,7 +67,7 @@ async function guidance(req, res) {
     console.error("❌ Error in /ai/guidance:", error.message);
     return res.status(503).json({
       success: false,
-      message: FALLBACK_MSG,
+      message: error.message || FALLBACK_MSG,
     });
   }
 }

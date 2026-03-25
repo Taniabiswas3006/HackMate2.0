@@ -7,6 +7,7 @@ const { testConnection } = require("./config/db");
 const recommendRoutes = require("./routes/recommend");
 const interestsRoutes = require("./routes/interests");
 const aiRoutes = require("./routes/ai");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/recommend", recommendRoutes);
 app.use("/interests", interestsRoutes);
 app.use("/ai", aiRoutes);
+app.use("/auth", authRoutes);
 
 // Health-check endpoint (moved to /api/health so index.html is served at /)
 app.get("/api/health", (req, res) => {

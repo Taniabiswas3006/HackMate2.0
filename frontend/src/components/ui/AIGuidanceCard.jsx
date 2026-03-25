@@ -1,5 +1,5 @@
-import { Sparkles } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Sparkles, RefreshCw } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 import { getAIGuidance } from '../../services/aiService.js'
 
 function AIGuidanceCard({ branch, year, interest }) {
@@ -7,29 +7,22 @@ function AIGuidanceCard({ branch, year, interest }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
+  const fetchGuidance = useCallback(() => {
     if (!branch || !year || !interest) return
 
-    let active = true
     setLoading(true)
     setError(null)
     setAdvice(null)
 
     getAIGuidance(branch, year, interest)
-      .then((result) => {
-        if (active) setAdvice(result)
-      })
-      .catch((err) => {
-        if (active) setError(err.message || 'Failed to get AI guidance')
-      })
-      .finally(() => {
-        if (active) setLoading(false)
-      })
-
-    return () => {
-      active = false
-    }
+      .then((result) => setAdvice(result))
+      .catch((err) => setError(err.message || 'Failed to get AI guidance'))
+      .finally(() => setLoading(false))
   }, [branch, year, interest])
+
+  useEffect(() => {
+    fetchGuidance()
+  }, [fetchGuidance])
 
   if (!branch || !year || !interest) return null
 
@@ -65,14 +58,20 @@ function AIGuidanceCard({ branch, year, interest }) {
         {loading && (
           <div className="flex items-center gap-3 text-sm text-body">
             <span className="h-5 w-5 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
-            <span>✨ Generating personalized AI insights…</span>
+            <span> Generating personalized AI insights…</span>
           </div>
         )}
 
         {error && (
-          <p className="rounded-xl bg-highlight/15 px-4 py-2.5 text-sm text-pink-700">
-            {error}
-          </p>
+          <div className="rounded-xl bg-highlight/15 px-4 py-2.5 text-sm text-pink-700 flex items-center justify-between gap-3">
+            <span>{error}</span>
+            <button
+              onClick={fetchGuidance}
+              className="flex items-center gap-1 shrink-0 rounded-lg bg-primary/10 px-3 py-1 text-xs font-medium text-primary hover:bg-primary/20 transition-colors"
+            >
+              <RefreshCw className="h-3 w-3" /> Retry
+            </button>
+          </div>
         )}
 
         {advice && (

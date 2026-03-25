@@ -5,9 +5,15 @@ import api from './api.js'
  * POST /ai/guidance  →  { success: true, advice: string }
  */
 export async function getAIGuidance(branch, year, interest) {
-  const { data } = await api.post('/ai/guidance', { branch, year, interest })
-  if (data.success) return data.advice
-  throw new Error(data.message || 'Failed to get AI guidance')
+  try {
+    const { data } = await api.post('/ai/guidance', { branch, year, interest })
+    if (data.success) return data.advice
+    throw new Error(data.message || 'Failed to get AI guidance')
+  } catch (err) {
+    // Extract the message from the server's JSON response if available
+    const serverMsg = err.response?.data?.message
+    throw new Error(serverMsg || err.message || 'Request failed with status code ' + (err.response?.status || 'unknown'))
+  }
 }
 
 /**

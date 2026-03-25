@@ -73,7 +73,7 @@ function Profile() {
     setSaveMsg('')
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     if (formValues.interests.length === 0) {
       setSaveMsg('Please select at least one interest.')
@@ -82,14 +82,18 @@ function Profile() {
     const yearNum = parseInt(formValues.year, 10)
     const yearLabel = `${yearNum}${yearNum === 1 ? 'st' : yearNum === 2 ? 'nd' : yearNum === 3 ? 'rd' : 'th'} Year`
 
-    updateProfile({
-      name: formValues.name,
-      branch: formValues.branch,
-      department: formValues.branch,
-      year: yearLabel,
-      interests: formValues.interests,
-    })
-    setSaveMsg('✅ Profile saved! Head to the Dashboard to see your personalised results.')
+    try {
+      await updateProfile({
+        name: formValues.name,
+        branch: formValues.branch,
+        department: formValues.branch,
+        year: yearLabel,
+        interests: formValues.interests,
+      })
+      setSaveMsg('✅ Profile saved! Head to the Dashboard to see your personalised results.')
+    } catch (err) {
+      setSaveMsg(`❌ ${err.message || 'Error updating profile'}`)
+    }
   }
 
   const inputClasses =

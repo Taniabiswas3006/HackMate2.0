@@ -1,38 +1,48 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState, useEffect } from 'react'
 import { AuthContext } from './authContext.js'
-import usersData from '../data/users.json'
+import * as authService from '../services/authService.js'
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(usersData.currentUser)
+  const [currentUser, setCurrentUser] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [initialLoad, setInitialLoad] = useState(true)
 
-  const login = useCallback((email, password) => {
-    // Mock login — accept any valid email/password combo
-    if (email && password) {
-      setCurrentUser((prev) => ({ ...prev, email }))
-      setIsLoggedIn(true)
-      return true
-    }
-    return false
+  useEffect(() => {
+    // Check if token exists on mount
+    authService.getMe().then((user) => {
+      if (user) {
+        setCurrentUser(user)
+        setIsLoggedIn(true)
+      }
+    }).catch(() => {
+    }).finally(() => {
+      setInitialLoad(false)
+    })
   }, [])
 
-  const signup = useCallback((userData) => {
-    setCurrentUser({
-      id: 'u1',
-      ...userData,
-      level: 'Beginner',
-    })
+  const login = useCallback(async (email, password) => {
+    const user = await authService.login(email, password)
+    setCurrentUser(user)
+    setIsLoggedIn(true)
+    return true
+  }, [])
+
+  const signup = useCallback(async (userData) => {
+    const user = await authService.signup(userData)
+    setCurrentUser(user)
     setIsLoggedIn(true)
     return true
   }, [])
 
   const logout = useCallback(() => {
-    setCurrentUser(usersData.currentUser)
+    authService.logout()
+    setCurrentUser(null)
     setIsLoggedIn(false)
   }, [])
 
-  const updateProfile = useCallback((updates) => {
-    setCurrentUser((prev) => ({ ...prev, ...updates }))
+  const updateProfile = useCallback(async (updates) => {
+    const user = await authService.updateProfile(updates)
+    setCurrentUser(user)
   }, [])
 
   const value = useMemo(
@@ -46,6 +56,8 @@ export function AuthProvider({ children }) {
     }),
     [currentUser, isLoggedIn, login, signup, logout, updateProfile],
   )
+
+  if (initialLoad) return null; // Don't render until we check log in status
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

@@ -29,13 +29,20 @@ async function initDB() {
   await connection.query(`USE \`${DB_NAME}\``);
 
   // ── Users table ──────────────────────────────────────
-  console.log("🔧 Creating users table…");
+  console.log("🔧 Dropping and recreating users table…");
+  await connection.query(`DROP TABLE IF EXISTS users`);
   await connection.query(`
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE users (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(100) NOT NULL,
+      email VARCHAR(150) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      phone VARCHAR(20),
+      gender VARCHAR(20),
       branch VARCHAR(50) NOT NULL,
-      year INT NOT NULL
+      department VARCHAR(50),
+      year VARCHAR(20) NOT NULL,
+      interests JSON
     )
   `);
 
@@ -76,10 +83,13 @@ async function initDB() {
   ];
 
   await connection.query("DELETE FROM users");
+  const defaultPassword = "$2a$10$w0pYdE60E5mE7GvCqGz9Tu0hA.7kTkI9L6H8pG8x9G8x9G8x9G8x9"; // Dummy bcrypt
   for (const [name, branch, year] of usersData) {
+    const email = `${name.toLowerCase()}@example.com`;
+    const yearStr = `${year}${year === 1 ? 'st' : year === 2 ? 'nd' : year === 3 ? 'rd' : 'th'} Year`;
     await connection.query(
-      "INSERT INTO users (name, branch, year) VALUES (?, ?, ?)",
-      [name, branch, year]
+      "INSERT INTO users (name, email, password, branch, department, year, interests) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [name, email, defaultPassword, branch, branch, yearStr, JSON.stringify([])]
     );
   }
 
