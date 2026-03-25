@@ -14,6 +14,7 @@ const {
 async function recommend(req, res) {
   try {
     const { branch, year, interests } = req.body;
+    const currentUserId = req.user.id;
 
     // ── Input validation ──────────────────────────────────
     if (!branch || !year || !interests) {
@@ -42,7 +43,7 @@ async function recommend(req, res) {
     const level = getLevel(year);
     const roadmap = getRoadmap(branch, interests, level);
     const events = getEvents(interests, level);
-    const peers = getPeers(interests);
+    const peers = await getPeers(interests, currentUserId);
 
     return res.status(200).json({
       success: true,

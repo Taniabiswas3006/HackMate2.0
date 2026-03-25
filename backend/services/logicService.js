@@ -1,6 +1,6 @@
 const roadmap = require("../data/roadmapData");
 const events = require("../data/eventData");
-const users = require("../data/userData");
+const { pool } = require("../config/db");
 
 /**
  * Determine skill level based on academic year.
@@ -62,12 +62,38 @@ function getEvents(interests, level) {
  * Find peers who share at least one interest with the requesting student.
  *
  * @param {string[]} interests - The requesting student's interests
- * @returns {Object[]} Matching peer profiles
+ * @param {number} currentUserId - The ID of the current user to exclude
+ * @returns {Promise<Object[]>} Matching peer profiles
  */
-function getPeers(interests) {
-  return users.filter((user) =>
-    user.interests.some((i) => interests.includes(i))
-  );
+async function getPeers(interests, currentUserId) {
+  try {
+    // Query users where interests JSON contains at least one matching interest
+    const placeholders = interests.map(() => '?').join(',');
+    const query = `
+      SELECT id, name, email, phone, gender, branch, department, year, interests
+      FROM users
+      WHERE id != ? AND JSON_OVERLAPS(interests, JSON_ARRAY(${placeholders}))
+    `;
+    const params = [currentUserId, ...interests];
+
+    const [rows] = await pool.query(query, params);
+
+    // Format the results similar to formatUser in authController
+    return rows.map(user => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone || "",
+      gender: user.gender || "",
+      branch: user.branch,
+      department: user.department || user.branch,
+      year: user.year,
+      interests: user.interests || [],
+    }));
+  } catch (error) {
+    console.error("Error fetching peers:", error);
+    return [];
+  }
 }
 
 module.exports = {

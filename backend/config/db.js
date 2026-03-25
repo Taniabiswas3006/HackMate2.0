@@ -23,7 +23,10 @@ async function testConnection() {
     connection.release();
     return true;
   } catch (error) {
-    console.error("MySQL connection failed:", error.message);
+    console.error("MySQL connection failed:", error?.message || error);
+    if (error && error.code) {
+      console.error("MySQL error code:", error.code);
+    }
     return false;
   }
 }

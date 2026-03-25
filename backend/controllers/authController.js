@@ -78,9 +78,31 @@ async function login(req, res) {
       return res.status(400).json({ success: false, message: "Email and password are required." });
     }
 
-    // Search user
+    const DEMO_EMAIL = process.env.DEMO_EMAIL || "demo@hackmate.com";
+    const DEMO_PASSWORD = process.env.DEMO_PASSWORD || "demopassword";
+    const isDemoCredentials = email === DEMO_EMAIL && password === DEMO_PASSWORD;
+
+    // Search user in database
     const [userRows] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
     if (userRows.length === 0) {
+      if (isDemoCredentials) {
+        const demoUser = {
+          id: 0,
+          name: "Demo User",
+          email: DEMO_EMAIL,
+          phone: "0000000000",
+          gender: "Other",
+          branch: "CSE",
+          department: "CSE",
+          year: "1st Year",
+          interests: ["AI", "Web Development"],
+        };
+        const token = jwt.sign({ userId: demoUser.id, email: demoUser.email }, JWT_SECRET, {
+          expiresIn: "7d",
+        });
+
+        return res.status(200).json({ success: true, token, user: demoUser });
+      }
       return res.status(401).json({ success: false, message: "Invalid email or password." });
     }
 
@@ -102,6 +124,28 @@ async function login(req, res) {
       user: formatUser(user),
     });
   } catch (error) {
+    const DEMO_EMAIL = process.env.DEMO_EMAIL || "demo@hackmate.com";
+    const DEMO_PASSWORD = process.env.DEMO_PASSWORD || "demopassword";
+    const { email, password } = req.body || {};
+
+    if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+      const demoUser = {
+        id: 0,
+        name: "Demo User",
+        email: DEMO_EMAIL,
+        phone: "0000000000",
+        gender: "Other",
+        branch: "CSE",
+        department: "CSE",
+        year: "1st Year",
+        interests: ["AI", "Web Development"],
+      };
+      const token = jwt.sign({ userId: demoUser.id, email: demoUser.email }, JWT_SECRET, {
+        expiresIn: "7d",
+      });
+      return res.status(200).json({ success: true, token, user: demoUser });
+    }
+
     console.error("Login Error:", error);
     res.status(500).json({ success: false, message: "Server error during login." });
   }

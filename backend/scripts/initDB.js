@@ -9,6 +9,7 @@
  */
 
 const mysql = require("mysql2/promise");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 async function initDB() {
@@ -61,37 +62,58 @@ async function initDB() {
   // ── Seed data ────────────────────────────────────────
   console.log("Seeding users...");
   const usersData = [
-    ["Amit",    "CSE",  1],
-    ["Sneha",   "CSE",  3],
-    ["Ananya",  "CSE",  2],
-    ["Rohit",   "CSE",  4],
-    ["Riya",    "IT",   2],
-    ["Vikram",  "IT",   4],
-    ["Neha",    "IT",   1],
-    ["Raj",     "ECE",  2],
-    ["Meera",   "ECE",  3],
-    ["Arjun",   "ECE",  1],
-    ["Karan",   "ME",   3],
-    ["Deepak",  "ME",   2],
-    ["Priya",   "AIML", 1],
-    ["Ishaan",  "AIML", 3],
-    ["Tanvi",   "AIML", 2],
-    ["Suresh",  "CE",   2],
-    ["Kavita",  "CE",   3],
-    ["Arun",    "EE",   2],
-    ["Pooja",   "EE",   3],
+    ["Amit",    "CSE",  1, ["AI", "Web Development"]],
+    ["Sneha",   "CSE",  3, ["AI", "Data Science"]],
+    ["Ananya",  "CSE",  2, ["Web Development", "Mobile"]],
+    ["Rohit",   "CSE",  4, ["AI", "Cybersecurity"]],
+    ["Riya",    "IT",   2, ["Web Development", "AI"]],
+    ["Vikram",  "IT",   4, ["Data Science", "AI"]],
+    ["Neha",    "IT",   1, ["Web Development", "UI/UX"]],
+    ["Raj",     "ECE",  2, ["IoT", "Embedded Systems"]],
+    ["Meera",   "ECE",  3, ["AI", "Robotics"]],
+    ["Arjun",   "ECE",  1, ["Web Development", "AI"]],
+    ["Karan",   "ME",   3, ["AI", "Robotics"]],
+    ["Deepak",  "ME",   2, ["Data Science", "AI"]],
+    ["Priya",   "AIML", 1, ["AI", "Data Science"]],
+    ["Ishaan",  "AIML", 3, ["AI", "Machine Learning"]],
+    ["Tanvi",   "AIML", 2, ["AI", "Web Development"]],
+    ["Suresh",  "CE",   2, ["Web Development", "AI"]],
+    ["Kavita",  "CE",   3, ["Data Science", "AI"]],
+    ["Arun",    "EE",   2, ["IoT", "AI"]],
+    ["Pooja",   "EE",   3, ["AI", "Embedded Systems"]],
   ];
 
   await connection.query("DELETE FROM users");
   const defaultPassword = "$2a$10$w0pYdE60E5mE7GvCqGz9Tu0hA.7kTkI9L6H8pG8x9G8x9G8x9G8x9"; // Dummy bcrypt
-  for (const [name, branch, year] of usersData) {
+  for (const [name, branch, year, interests] of usersData) {
     const email = `${name.toLowerCase()}@example.com`;
     const yearStr = `${year}${year === 1 ? 'st' : year === 2 ? 'nd' : year === 3 ? 'rd' : 'th'} Year`;
     await connection.query(
       "INSERT INTO users (name, email, password, branch, department, year, interests) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [name, email, defaultPassword, branch, branch, yearStr, JSON.stringify([])]
+      [name, email, defaultPassword, branch, branch, yearStr, JSON.stringify(interests)]
     );
   }
+
+  // Demo user (email/password) for test logins
+  const demoEmail = process.env.DEMO_EMAIL || "demo@hackmate.com";
+  const demoPassword = process.env.DEMO_PASSWORD || "demopassword";
+  const demoHashedPassword = await bcrypt.hash(demoPassword, 10);
+
+  console.log(`Seeding demo user: ${demoEmail}`);
+  await connection.query(
+    "INSERT INTO users (name, email, password, phone, gender, branch, department, year, interests) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [
+      "Demo User",
+      demoEmail,
+      demoHashedPassword,
+      "0000000000",
+      "Other",
+      "CSE",
+      "CSE",
+      "1st Year",
+      JSON.stringify(["AI", "Web Development"]),
+    ]
+  );
 
   console.log("Seeding events...");
   const eventsData = [

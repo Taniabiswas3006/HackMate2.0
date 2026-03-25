@@ -4,6 +4,7 @@ import Dashboard from '../pages/Dashboard.jsx'
 import Landing from '../pages/Landing.jsx'
 import Opportunities from '../pages/Opportunities.jsx'
 import Peers from '../pages/Peers.jsx'
+import PeerProfile from '../pages/PeerProfile.jsx'
 import Profile from '../pages/Profile.jsx'
 import Roadmap from '../pages/Roadmap.jsx'
 import SignIn from '../pages/SignIn.jsx'
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Route path="/events" element={<Opportunities />} />
         <Route path="/opportunities" element={<Navigate to="/events" replace />} />
         <Route path="/peers" element={<Peers />} />
+        <Route path="/peers/:id" element={<PeerProfile />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

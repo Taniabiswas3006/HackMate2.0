@@ -20,3 +20,18 @@ export async function getSuggestedPeers(branch, year, interests) {
   }
 }
 
+/**
+ * Fetch a user's public profile by ID
+ */
+export async function getUserProfile(userId) {
+  try {
+    const { data } = await api.get(`/users/${userId}`)
+    if (data.success) {
+      return data.user
+    }
+    throw new Error('User not found')
+  } catch (err) {
+    throw new Error(err.response?.data?.message || 'Failed to fetch user profile')
+  }
+}
+

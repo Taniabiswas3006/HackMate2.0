@@ -8,6 +8,7 @@ const recommendRoutes = require("./routes/recommend");
 const interestsRoutes = require("./routes/interests");
 const aiRoutes = require("./routes/ai");
 const authRoutes = require("./routes/auth");
+const usersRoutes = require("./routes/users");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +23,7 @@ app.use("/recommend", recommendRoutes);
 app.use("/interests", interestsRoutes);
 app.use("/ai", aiRoutes);
 app.use("/auth", authRoutes);
+app.use("/users", usersRoutes);
 
 // Health-check endpoint (moved to /api/health so index.html is served at /)
 app.get("/api/health", (req, res) => {

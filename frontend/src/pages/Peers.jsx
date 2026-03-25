@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Button from '../components/ui/Button.jsx'
 import Card from '../components/ui/Card.jsx'
 import Loader from '../components/ui/Loader.jsx'
@@ -14,6 +15,7 @@ const avatarColors = [
 
 function Peers() {
   const { currentUser } = useAuth()
+  const navigate = useNavigate()
   const [peers, setPeers] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -94,7 +96,9 @@ function Peers() {
                 </div>
               )}
 
-              <Button className="mt-4 w-full">Connect</Button>
+              <Button className="mt-4 w-full" onClick={() => navigate(`/peers/${peer.id}`)}>
+                Connect
+              </Button>
             </Card>
           ))
         ) : (
