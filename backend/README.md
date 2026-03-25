@@ -1,14 +1,14 @@
-# 🚀 HackMate Backend
+# HackMate Backend
 
 A student platform backend built with **Node.js**, **Express.js**, and **MySQL** that provides:
 
-- 🗺️ **Personalized Skill Roadmaps** — based on branch, year, and interests
-- 🎯 **Hackathon/Event Discovery** — filtered by domain and level
-- 🤝 **Peer Connect** — match students with shared interests
+- **Personalized Skill Roadmaps** — based on branch, year, and interests
+- **Hackathon/Event Discovery** — filtered by domain and level
+- **Peer Connect** — match students with shared interests
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 HackMate/
@@ -66,7 +66,7 @@ npm start       # production
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### `GET /`
 Health check — returns API status.
@@ -116,7 +116,7 @@ Health check — returns API status.
 
 ---
 
-## 🧠 Logic (Rule-Based)
+## Logic (Rule-Based)
 
 | Year | Level        |
 |------|-------------|
@@ -130,7 +130,7 @@ Health check — returns API status.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - Node.js + Express.js
 - MySQL (via `mysql2`)

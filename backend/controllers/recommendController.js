@@ -52,7 +52,7 @@ async function recommend(req, res) {
       peers,
     });
   } catch (error) {
-    console.error("❌ Error in /recommend:", error.message);
+    console.error("Error in /recommend:", error.message);
     return res.status(500).json({
       success: false,
       message: "Internal server error.",

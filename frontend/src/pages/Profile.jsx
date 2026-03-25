@@ -90,9 +90,9 @@ function Profile() {
         year: yearLabel,
         interests: formValues.interests,
       })
-      setSaveMsg('✅ Profile saved! Head to the Dashboard to see your personalised results.')
+      setSaveMsg('Profile saved! Head to the Dashboard to see your personalised results.')
     } catch (err) {
-      setSaveMsg(`❌ ${err.message || 'Error updating profile'}`)
+      setSaveMsg(`Error: ${err.message || 'Error updating profile'}`)
     }
   }
 
@@ -242,7 +242,7 @@ function Profile() {
 
           {/* Status / Error Message */}
           {saveMsg && (
-            <p className={`text-sm ${saveMsg.startsWith('✅') ? 'text-emerald-600' : 'text-pink-700'}`}>
+            <p className={`text-sm ${saveMsg.includes('saved') ? 'text-emerald-600' : 'text-pink-700'}`}>
               {saveMsg}
             </p>
           )}

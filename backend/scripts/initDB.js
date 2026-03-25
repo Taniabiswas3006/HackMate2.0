@@ -22,14 +22,14 @@ async function initDB() {
 
   const DB_NAME = process.env.DB_NAME || "hackmate";
 
-  console.log("🔧 Creating database if not exists…");
+  console.log("Creating database if not exists...");
   await connection.query(
     `CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\``
   );
   await connection.query(`USE \`${DB_NAME}\``);
 
   // ── Users table ──────────────────────────────────────
-  console.log("🔧 Dropping and recreating users table…");
+  console.log("Dropping and recreating users table...");
   await connection.query(`DROP TABLE IF EXISTS users`);
   await connection.query(`
     CREATE TABLE users (
@@ -47,7 +47,7 @@ async function initDB() {
   `);
 
   // ── Events table ─────────────────────────────────────
-  console.log("🔧 Creating events table…");
+  console.log("Creating events table...");
   await connection.query(`
     CREATE TABLE IF NOT EXISTS events (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -59,7 +59,7 @@ async function initDB() {
   `);
 
   // ── Seed data ────────────────────────────────────────
-  console.log("🌱 Seeding users…");
+  console.log("Seeding users...");
   const usersData = [
     ["Amit",    "CSE",  1],
     ["Sneha",   "CSE",  3],
@@ -93,7 +93,7 @@ async function initDB() {
     );
   }
 
-  console.log("🌱 Seeding events…");
+  console.log("Seeding events...");
   const eventsData = [
     ["Hack4India AI Sprint",       "AI",                    "Beginner",     "Online"],
     ["AI Bootcamp Week",           "AI",                    "Beginner",     "Online"],
@@ -137,7 +137,7 @@ async function initDB() {
     );
   }
 
-  console.log(`\n✅ Database initialised successfully!`);
+  console.log(`\nDatabase initialised successfully!`);
   console.log(`   Database : ${DB_NAME}`);
   console.log(`   Tables   : users, events`);
   console.log(`   Users    : ${usersData.length} rows`);
@@ -147,6 +147,6 @@ async function initDB() {
 }
 
 initDB().catch((err) => {
-  console.error("❌ Database initialisation failed:", err.message);
+  console.error("Database initialisation failed:", err.message);
   process.exit(1);
 });

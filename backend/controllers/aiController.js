@@ -44,7 +44,7 @@ async function explain(req, res) {
       explanation,
     });
   } catch (error) {
-    console.error("❌ Error in /ai/explain:", error.message);
+    console.error("Error in /ai/explain:", error.message);
     return res.status(503).json({
       success: false,
       message: error.message || FALLBACK_MSG,
@@ -79,7 +79,7 @@ async function guidance(req, res) {
       advice,
     });
   } catch (error) {
-    console.error("❌ Error in /ai/guidance:", error.message);
+    console.error("Error in /ai/guidance:", error.message);
     return res.status(503).json({
       success: false,
       message: error.message || FALLBACK_MSG,
@@ -142,7 +142,7 @@ Make sure:
     const roadmap = extractJSON(response);
 
     if (!roadmap || !roadmap.topics || !roadmap.practical) {
-      console.warn("⚠️  Gemini returned invalid roadmap structure:", response);
+      console.warn("Gemini returned invalid roadmap structure:", response);
       return res.status(503).json({
         success: false,
         message: "Failed to generate valid roadmap structure",
@@ -154,7 +154,7 @@ Make sure:
       roadmap,
     });
   } catch (error) {
-    console.error("❌ Error in /ai/roadmap:", error.message);
+    console.error("Error in /ai/roadmap:", error.message);
     return res.status(503).json({
       success: false,
       message: error.message || FALLBACK_MSG,

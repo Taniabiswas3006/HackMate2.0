@@ -62,7 +62,7 @@ async function signup(req, res) {
       user: formatUser(user),
     });
   } catch (error) {
-    console.error("❌ Signup Error:", error);
+    console.error("Signup Error:", error);
     res.status(500).json({ success: false, message: "Server error during signup." });
   }
 }
@@ -102,7 +102,7 @@ async function login(req, res) {
       user: formatUser(user),
     });
   } catch (error) {
-    console.error("❌ Login Error:", error);
+    console.error("Login Error:", error);
     res.status(500).json({ success: false, message: "Server error during login." });
   }
 }
@@ -131,7 +131,7 @@ async function me(req, res) {
       user: formatUser(userRows[0]),
     });
   } catch (error) {
-    console.error("❌ Auth Me Error:", error.message);
+    console.error("Auth Me Error:", error.message);
     res.status(401).json({ success: false, message: "Invalid or expired token." });
   }
 }
@@ -165,7 +165,7 @@ async function updateProfile(req, res) {
         });
 
     } catch (error) {
-        console.error("❌ Update Profile Error:", error.message);
+        console.error("Update Profile Error:", error.message);
         res.status(500).json({ success: false, message: "Failed to update profile." });
     }
 }

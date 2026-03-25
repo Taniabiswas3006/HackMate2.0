@@ -101,7 +101,7 @@ async function askGemini(prompt) {
           }
 
           console.log(
-            `   ⏳ Attempt ${attempt}/${MAX_RETRIES} — waiting ${delay}ms before retry...`
+            `   Attempt ${attempt}/${MAX_RETRIES} — waiting ${delay}ms before retry...`
           );
           await sleep(delay);
         }
@@ -128,7 +128,7 @@ async function askGemini(prompt) {
           throw new Error("Empty response from Gemini API.");
         }
 
-        console.log(`   ✅ Gemini request succeeded on attempt ${attempt}`);
+        console.log(`   Gemini request succeeded on attempt ${attempt}`);
         return text.trim();
       } catch (err) {
         lastError = err;
@@ -143,7 +143,7 @@ async function askGemini(prompt) {
         }
 
         console.warn(
-          `⚠️  Gemini attempt ${attempt}/${MAX_RETRIES} failed — ` +
+          `Gemini attempt ${attempt}/${MAX_RETRIES} failed — ` +
             `status ${status || "N/A"}: ${apiMessage}`
         );
 

@@ -26,7 +26,7 @@ app.use("/auth", authRoutes);
 // Health-check endpoint (moved to /api/health so index.html is served at /)
 app.get("/api/health", (req, res) => {
   res.json({
-    message: "🚀 HackMate API is running",
+    message: "HackMate API is running",
     version: "1.0.0",
     endpoints: {
       recommend: "POST /recommend",
@@ -39,7 +39,7 @@ app.get("/api/health", (req, res) => {
 
 // ── Start Server ──────────────────────────────────────
 app.listen(PORT, async () => {
-  console.log(`\n🚀 HackMate server running on http://localhost:${PORT}`);
+  console.log(`\nHackMate server running on http://localhost:${PORT}`);
   console.log(`   POST http://localhost:${PORT}/recommend`);
   console.log(`   POST http://localhost:${PORT}/ai/explain`);
   console.log(`   POST http://localhost:${PORT}/ai/guidance\n`);

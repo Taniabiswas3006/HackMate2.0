@@ -68,7 +68,7 @@ function Dashboard() {
       {/* Welcome */}
       <section>
         <h1 className="text-2xl font-semibold text-heading sm:text-3xl">
-          Welcome back, {currentUser.name} 👋
+          Welcome back, {currentUser.name}
         </h1>
         <p className="mt-2 text-sm text-body">
           Here's your growth snapshot for today.
