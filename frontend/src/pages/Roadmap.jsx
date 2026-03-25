@@ -2,6 +2,7 @@ import { CheckCircle2, CircleDashed, CircleDot } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import Card from '../components/ui/Card.jsx'
 import Loader from '../components/ui/Loader.jsx'
+import SkillRoadmapDetail from '../components/ui/SkillRoadmapDetail.jsx'
 import { useAuth } from '../context/useAuth.js'
 import { getRoadmap } from '../services/roadmapService.js'
 
@@ -24,6 +25,7 @@ function Roadmap() {
   const { currentUser } = useAuth()
   const [roadmap, setRoadmap] = useState([])
   const [loading, setLoading] = useState(true)
+  const [selectedSkill, setSelectedSkill] = useState(null)
 
   const branch = currentUser.department || currentUser.branch
   const numericYear = parseInt(String(currentUser.year).replace(/\D/g, ''), 10) || 2
@@ -46,6 +48,17 @@ function Roadmap() {
 
   if (loading) {
     return <Loader text="Loading roadmap..." />
+  }
+
+  // If a skill is selected, show the detailed view
+  if (selectedSkill) {
+    return (
+      <SkillRoadmapDetail
+        skill={selectedSkill.skill}
+        level={selectedSkill.level}
+        onBack={() => setSelectedSkill(null)}
+      />
+    )
   }
 
   // Support both old format (status-based) and new format (steps-based)
@@ -98,18 +111,27 @@ function Roadmap() {
                 key={item.interest}
                 title={item.interest}
                 subtitle={item.level ? `Level: ${item.level}` : undefined}
-                className="animate-fade-in-up"
+                className="animate-fade-in-up cursor-pointer transition-all hover:shadow-lg hover:border-primary"
                 style={{ animationDelay: `${index * 80}ms` }}
+                onClick={() => setSelectedSkill({ skill: item.interest, level: item.level })}
               >
                 {item.steps && item.steps.length > 0 ? (
                   <ul className="list-disc space-y-1 pl-4 text-sm text-body">
-                    {item.steps.map((step, i) => (
+                    {item.steps.slice(0, 3).map((step, i) => (
                       <li key={i}>{step}</li>
                     ))}
+                    {item.steps.length > 3 && (
+                      <li className="text-primary font-medium">
+                        +{item.steps.length - 3} more topics...
+                      </li>
+                    )}
                   </ul>
                 ) : (
                   <p className="text-sm text-body">No specific steps defined yet.</p>
                 )}
+                <div className="mt-4 text-xs font-medium text-primary">
+                  Click to view detailed roadmap →
+                </div>
               </Card>
             )
           }
@@ -123,15 +145,21 @@ function Roadmap() {
               key={item.id}
               title={item.skill}
               subtitle={item.description}
-              className="animate-fade-in-up"
+              className="animate-fade-in-up cursor-pointer transition-all hover:shadow-lg hover:border-primary"
               style={{ animationDelay: `${index * 80}ms` }}
+              onClick={() => setSelectedSkill({ skill: item.skill, level: 'Beginner' })}
             >
-              <span
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${statusConfig.badge}`}
-              >
-                <StatusIcon className="h-3.5 w-3.5" />
-                {item.status}
-              </span>
+              <div className="flex items-center justify-between">
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${statusConfig.badge}`}
+                >
+                  <StatusIcon className="h-3.5 w-3.5" />
+                  {item.status}
+                </span>
+                <span className="text-xs font-medium text-primary">
+                  View Details →
+                </span>
+              </div>
             </Card>
           )
         })}
