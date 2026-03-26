@@ -1,11 +1,8 @@
 "use client" 
 
 import * as React from "react"
-
-import { VariantProps, cva } from "class-variance-authority"
+import { cva } from "class-variance-authority"
 import {
-  HTMLMotionProps,
-  MotionValue,
   motion,
   useMotionTemplate,
   useScroll,
@@ -25,23 +22,36 @@ const cardVariants = cva("absolute will-change-transform", {
   },
 })
 
-interface CardStickyProps
-  extends HTMLMotionProps<"div">,
-    VariantProps<typeof cardVariants> {
-  arrayLength: number
-  index: number
-  incrementY?: number
-  incrementZ?: number
-  incrementRotation?: number
-}
+function ContainerScroll({ children, style, className, ...props }) {
+  const scrollRef = React.useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: ["start center", "end end"],
+  })
 
-interface ContainerScrollContextValue {
-  scrollYProgress: MotionValue<number>
-}
+  const contextValue = React.useMemo(
+    () => ({ scrollYProgress }),
+    [scrollYProgress]
+  )
 
-const ContainerScrollContext = React.createContext<
-  ContainerScrollContextValue | undefined
->(undefined)
+  return React.createElement(
+    "div",
+    {
+      ref: scrollRef,
+      className: `relative min-h-[200vh] w-full ${className || ""}`,
+      style: { perspective: "1000px", ...style },
+      ...props,
+    },
+    React.createElement(
+      ContainerScrollContext.Provider,
+      { value: contextValue },
+      children
+    )
+  )
+}
+ContainerScroll.displayName = "ContainerScroll"
+
+const ContainerScrollContext = React.createContext(undefined)
 
 function useContainerScrollContext() {
   const context = React.useContext(ContainerScrollContext)
@@ -53,107 +63,78 @@ function useContainerScrollContext() {
   return context
 }
 
-export const ContainerScroll: React.FC<
-  React.HTMLAttributes<HTMLDivElement>
-> = ({ children, style, className, ...props }) => {
-  const scrollRef = React.useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: scrollRef,
-    offset: ["start center", "end end"],
-  })
-
-  return (
-    <ContainerScrollContext.Provider value={{ scrollYProgress }}>
-      <div
-        ref={scrollRef}
-        className={`relative min-h-[200vh] w-full ${className}`}
-        style={{ perspective: "1000px", ...style }}
-        {...props}
-      >
-        {children}
-      </div>
-    </ContainerScrollContext.Provider>
-  )
-}
-ContainerScroll.displayName = "ContainerScroll"
-
-export const CardsContainer: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  children,
-  className,
-  ...props
-}) => {
-  return (
-    <div
-      className={`relative ${className}`}
-      style={{ perspective: "1000px", ...props.style }}
-      {...props}
-    >
-      {children}
-    </div>
+function CardsContainer({ children, className, ...props }) {
+  return React.createElement(
+    "div",
+    {
+      className: `relative ${className || ""}`,
+      style: { perspective: "1000px", ...props.style },
+      ...props,
+    },
+    children
   )
 }
 CardsContainer.displayName = "CardsContainer"
 
-export const CardTransformed = React.forwardRef<
-  HTMLDivElement,
-  CardStickyProps
->(
-  (
-    {
-      arrayLength,
-      index,
-      incrementY = 10,
-      incrementZ = 10,
-      incrementRotation = -index + 90,
-      className,
-      variant,
-      style,
-      ...props
-    },
-    ref
-  ) => {
-    const { scrollYProgress } = useContainerScrollContext()
+const CardTransformed = React.forwardRef(function CardTransformed(
+  {
+    arrayLength,
+    index,
+    incrementY = 10,
+    incrementZ = 10,
+    incrementRotation = -index + 90,
+    className,
+    variant,
+    style,
+    ...props
+  },
+  ref
+) {
+  const { scrollYProgress } = useContainerScrollContext()
 
-    const start = index / (arrayLength + 1)
-    const end = (index + 1) / (arrayLength + 1)
-    const range = React.useMemo(() => [start, end], [start, end])
-    const rotateRange = [range[0] - 1.5, range[1] / 1.5]
+  const start = index / (arrayLength + 1)
+  const end = (index + 1) / (arrayLength + 1)
+  const range = React.useMemo(() => [start, end], [start, end])
+  const rotateRange = [range[0] - 1.5, range[1] / 1.5]
 
-    const y = useTransform(scrollYProgress, range, ["0%", "-180%"])
-    const rotate = useTransform(scrollYProgress, rotateRange, [
-      incrementRotation,
-      0,
-    ])
-    const transform = useMotionTemplate`translateZ(${
-      index * incrementZ
-    }px) translateY(${y}) rotate(${rotate}deg)`
+  const y = useTransform(scrollYProgress, range, ["0%", "-180%"])
+  const rotate = useTransform(scrollYProgress, rotateRange, [
+    incrementRotation,
+    0,
+  ])
+  const transform = useMotionTemplate`translateZ(${
+    index * incrementZ
+  }px) translateY(${y}) rotate(${rotate}deg)`
 
-    const dx = useTransform(scrollYProgress, rotateRange, [4, 0])
-    const dy = useTransform(scrollYProgress, rotateRange, [4, 12])
-    const blur = useTransform(scrollYProgress, rotateRange, [2, 24])
-    const alpha = useTransform(scrollYProgress, rotateRange, [0.15, 0.2])
-    const filter =
-      variant === "light" 
-        ? useMotionTemplate`drop-shadow(${dx}px ${dy}px ${blur}px rgba(0,0,0,${alpha}))`
-        : "none"
+  const dx = useTransform(scrollYProgress, rotateRange, [4, 0])
+  const dy = useTransform(scrollYProgress, rotateRange, [4, 12])
+  const blur = useTransform(scrollYProgress, rotateRange, [2, 24])
+  const alpha = useTransform(scrollYProgress, rotateRange, [0.15, 0.2])
+  const filter =
+    variant === "light" 
+      ? useMotionTemplate`drop-shadow(${dx}px ${dy}px ${blur}px rgba(0,0,0,${alpha}))`
+      : "none"
 
-    const cardStyle = {
-      top: index * incrementY,
-      transform,
-      backfaceVisibility: "hidden" as const,
-      zIndex: (arrayLength - index) * incrementZ,
-      filter,
-      ...style,
-    }
-    return (
-      <motion.div
-        layout="position"
-        ref={ref}
-        style={cardStyle}
-        className={cardVariants({ variant, className })}
-        {...props}
-      />
-    )
+  const cardStyle = {
+    top: index * incrementY,
+    transform,
+    backfaceVisibility: "hidden",
+    zIndex: (arrayLength - index) * incrementZ,
+    filter,
+    ...style,
   }
-)
+  
+  return React.createElement(
+    motion.div,
+    {
+      layout: "position",
+      ref: ref,
+      style: cardStyle,
+      className: cardVariants({ variant, className }),
+      ...props,
+    }
+  )
+})
 CardTransformed.displayName = "CardTransformed"
+
+export { ContainerScroll, CardsContainer, CardTransformed }

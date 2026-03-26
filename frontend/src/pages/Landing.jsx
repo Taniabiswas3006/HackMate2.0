@@ -1,5 +1,5 @@
 import Navbar from '../components/layout/Navbar.jsx'
-import { FeaturesCards } from '../components/ui/FeaturesCards.jsx'
+import { StaggerTestimonials } from '../components/ui/StaggerTestimonials.jsx'
 import {
   ArrowRight,
   ChevronRight,
@@ -162,7 +162,7 @@ function Landing() {
               Tools and features designed to accelerate your tech journey.
             </p>
           </div>
-          <FeaturesCards />
+          <StaggerTestimonials />
         </div>
       </section>
 
