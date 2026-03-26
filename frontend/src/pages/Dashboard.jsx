@@ -101,19 +101,19 @@ const Dashboard = () => {
 
 const Sidebar = ({ open, setOpen, selected, setSelected, navItems, currentUser }) => {
   return (
-    <nav className={`sticky top-0 h-screen shrink-0 border-r border-primary/10 bg-card transition-all duration-300 ease-in-out ${open ? 'w-64' : 'w-16'}`}>
-      <div className="mb-6 border-b border-primary/10 pb-4 pt-4">
-        <div className="flex cursor-pointer items-center justify-between rounded-md mx-2 p-2 transition-colors hover:bg-primary/5">
-          <div className="flex items-center gap-3">
+    <nav className={`sticky top-0 h-screen shrink-0 border-r border-primary/10 bg-card transition-all duration-300 ease-in-out ${open ? 'w-72' : 'w-20'}`}>
+      <div className="mb-6 border-b border-primary/10 pb-6 pt-6">
+        <div className="flex cursor-pointer items-center justify-between rounded-xl mx-3 p-3 transition-colors hover:bg-primary/5">
+          <div className="flex items-center gap-4">
             <Logo />
             {open && (
               <div className="transition-opacity duration-200">
                 <div className="flex items-center gap-2">
                   <div>
-                    <span className="block text-sm font-semibold text-heading">
+                    <span className="block text-base font-semibold text-heading">
                       HackMate
                     </span>
-                    <span className="block text-xs text-body">
+                    <span className="block text-sm text-body">
                       {currentUser.year || 'Student'}
                     </span>
                   </div>
@@ -121,11 +121,11 @@ const Sidebar = ({ open, setOpen, selected, setSelected, navItems, currentUser }
               </div>
             )}
           </div>
-          {open && <ChevronDown className="h-4 w-4 text-body" />}
+          {open && <ChevronDown className="h-5 w-5 text-body" />}
         </div>
       </div>
 
-      <div className="space-y-1 px-2">
+      <div className="space-y-2 px-3">
         {navItems.map((item) => (
           <NavOption
             key={item.title}
@@ -145,8 +145,8 @@ const Sidebar = ({ open, setOpen, selected, setSelected, navItems, currentUser }
 
 const Logo = () => {
   return (
-    <div className="grid size-10 shrink-0 place-content-center rounded-lg bg-gradient-to-br from-primary to-secondary shadow-sm">
-      <Sparkles className="h-5 w-5 text-white" />
+    <div className="grid size-12 shrink-0 place-content-center rounded-xl bg-gradient-to-br from-primary to-secondary shadow-sm">
+      <Sparkles className="h-6 w-6 text-white" />
     </div>
   )
 }
@@ -156,17 +156,17 @@ const NavOption = ({ Icon, title, selected, setSelected, open }) => {
   return (
     <button
       onClick={() => setSelected(title)}
-      className={`relative flex h-11 w-full items-center rounded-md transition-all duration-200 ${
+      className={`relative flex h-14 w-full items-center rounded-xl transition-all duration-200 ${
         isSelected 
-          ? "bg-primary/10 text-primary border-l-2 border-primary" 
+          ? "bg-primary/10 text-primary border-l-4 border-primary" 
           : "text-body hover:bg-primary/5 hover:text-heading"
       }`}
     >
-      <div className="grid h-full w-12 place-content-center">
-        <Icon className="h-4 w-4" />
+      <div className="grid h-full w-16 place-content-center">
+        <Icon className="h-5 w-5" />
       </div>
       {open && (
-        <span className="text-sm font-medium">{title}</span>
+        <span className="text-base font-medium">{title}</span>
       )}
     </button>
   )
@@ -176,16 +176,16 @@ const ToggleClose = ({ open, setOpen }) => {
   return (
     <button
       onClick={() => setOpen(!open)}
-      className="absolute bottom-0 left-0 right-0 border-t border-primary/10 transition-colors hover:bg-primary/5"
+      className="absolute bottom-0 left-0 right-0 border-t border-primary/10 transition-colors hover:bg-primary/5 py-4"
     >
-      <div className="flex items-center p-3">
-        <div className="grid size-10 place-content-center">
+      <div className="flex items-center px-4">
+        <div className="grid size-12 place-content-center">
           <ChevronsRight
-            className={`h-4 w-4 transition-transform duration-300 text-body ${open ? "rotate-180" : ""}`}
+            className={`h-5 w-5 transition-transform duration-300 text-body ${open ? "rotate-180" : ""}`}
           />
         </div>
         {open && (
-          <span className="text-sm font-medium text-body">Collapse</span>
+          <span className="text-base font-medium text-body">Collapse</span>
         )}
       </div>
     </button>
@@ -198,44 +198,44 @@ const DashboardContent = ({ isDark, setIsDark, currentUser, loading, level, road
   }
 
   return (
-    <div className="flex-1 bg-section p-6 overflow-auto">
-      <div className="flex items-center justify-between mb-8">
+    <div className="flex-1 bg-section p-8 min-h-screen overflow-auto">
+      <div className="flex items-center justify-between mb-10">
         <div>
-          <h1 className="text-3xl font-bold text-heading">Welcome back, {currentUser.name}</h1>
-          <p className="text-body mt-1">Here's your growth snapshot for today</p>
+          <h1 className="text-4xl font-bold text-heading">Welcome back, {currentUser.name}</h1>
+          <p className="text-lg text-body mt-2">Here's your growth snapshot for today</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-body" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-body" />
             <input 
               type="text" 
-              placeholder="Search..." 
-              className="pl-10 pr-4 py-2 rounded-lg border border-primary/20 bg-card text-sm text-heading focus:outline-none focus:border-primary"
+              placeholder="Search..."
+              className="pl-12 pr-5 py-3 rounded-xl border border-primary/20 bg-card text-base text-heading focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/15 w-64"
             />
           </div>
-          <button className="relative p-2 rounded-lg bg-card border border-primary/20 text-body hover:text-heading transition-colors">
-            <Bell className="h-5 w-5" />
-            <span className="absolute -top-1 -right-1 h-3 w-3 bg-secondary rounded-full"></span>
+          <button className="relative p-3 rounded-xl bg-card border border-primary/20 text-body hover:text-heading transition-colors">
+            <Bell className="h-6 w-6" />
+            <span className="absolute -top-1 -right-1 h-3.5 w-3.5 bg-secondary rounded-full"></span>
           </button>
           <button
             onClick={() => setIsDark(!isDark)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-primary/20 bg-card text-body hover:text-heading transition-colors"
+            className="flex h-12 w-12 items-center justify-center rounded-xl border border-primary/20 bg-card text-body hover:text-heading transition-colors"
           >
-            {isDark ? <Sparkles className="h-4 w-4" /> : <TrendingUp className="h-4 w-4" />}
+            {isDark ? <Sparkles className="h-5 w-5" /> : <TrendingUp className="h-5 w-5" />}
           </button>
-          <button className="p-2 rounded-lg bg-card border border-primary/20 text-body hover:text-heading transition-colors">
-            <User className="h-5 w-5" />
+          <button className="p-3 rounded-xl bg-card border border-primary/20 text-body hover:text-heading transition-colors">
+            <User className="h-6 w-6" />
           </button>
         </div>
       </div>
 
       {interests.length === 0 && (
-        <div className="mb-6 rounded-xl bg-primary/10 px-4 py-3 text-sm text-primary border border-primary/20">
+        <div className="mb-8 rounded-2xl bg-primary/10 px-6 py-4 text-base text-primary border border-primary/20">
           Head over to your <strong>Profile</strong> to select a branch and interests so we can generate your personalised roadmap!
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <StatCard 
           icon={Award} 
           label="Your Level" 
@@ -265,18 +265,18 @@ const DashboardContent = ({ isDark, setIsDark, currentUser, loading, level, road
       {roadmap.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <div className="rounded-xl border border-primary/10 bg-card p-6 shadow-soft">
-              <h3 className="text-lg font-semibold text-heading mb-4">Skill Roadmap</h3>
+            <div className="rounded-2xl border border-primary/10 bg-card p-8 shadow-soft">
+              <h3 className="text-xl font-semibold text-heading mb-6">Skill Roadmap</h3>
               <div className="space-y-4">
                 {roadmap.slice(0, 4).map((item, i) => (
-                  <div key={i} className="flex items-center space-x-4 p-3 rounded-lg bg-section hover:bg-primary/5 transition-colors cursor-pointer">
-                    <div className="p-2 rounded-lg bg-primary/10">
-                      <Map className="h-4 w-4 text-primary" />
+                  <div key={i} className="flex items-center space-x-5 p-5 rounded-xl bg-section hover:bg-primary/5 transition-colors cursor-pointer">
+                    <div className="p-3 rounded-xl bg-primary/10">
+                      <Map className="h-5 w-5 text-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-heading">{item.interest || item.skill}</p>
+                      <p className="text-base font-medium text-heading">{item.interest || item.skill}</p>
                       {item.level && (
-                        <span className="text-xs text-body">{item.level}</span>
+                        <span className="text-sm text-body">{item.level}</span>
                       )}
                     </div>
                   </div>
@@ -286,26 +286,26 @@ const DashboardContent = ({ isDark, setIsDark, currentUser, loading, level, road
           </div>
 
           <div className="space-y-6">
-            <div className="rounded-xl border border-primary/10 bg-card p-6 shadow-soft">
-              <h3 className="text-lg font-semibold text-heading mb-4">Your Interests</h3>
-              <div className="flex flex-wrap gap-2">
+            <div className="rounded-2xl border border-primary/10 bg-card p-6 shadow-soft">
+              <h3 className="text-xl font-semibold text-heading mb-5">Your Interests</h3>
+              <div className="flex flex-wrap gap-3">
                 {interests.map((interest, i) => (
-                  <span key={i} className="rounded-full bg-secondary/20 px-3 py-1 text-xs font-medium text-heading">
+                  <span key={i} className="rounded-full bg-secondary/20 px-4 py-2 text-sm font-medium text-heading">
                     {interest}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-xl border border-primary/10 bg-card p-6 shadow-soft">
-              <h3 className="text-lg font-semibold text-heading mb-4">Quick Stats</h3>
+            <div className="rounded-2xl border border-primary/10 bg-card p-6 shadow-soft">
+              <h3 className="text-xl font-semibold text-heading mb-5">Quick Stats</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-body">Profile Completion</span>
-                  <span className="text-sm font-medium text-heading">{interests.length > 0 ? '80%' : '40%'}</span>
+                  <span className="text-base text-body">Profile Completion</span>
+                  <span className="text-base font-medium text-heading">{interests.length > 0 ? '80%' : '40%'}</span>
                 </div>
-                <div className="w-full bg-section rounded-full h-2">
-                  <div className="bg-primary h-2 rounded-full" style={{ width: interests.length > 0 ? '80%' : '40%' }}></div>
+                <div className="w-full bg-section rounded-full h-3">
+                  <div className="bg-primary h-3 rounded-full" style={{ width: interests.length > 0 ? '80%' : '40%' }}></div>
                 </div>
               </div>
             </div>
@@ -318,15 +318,15 @@ const DashboardContent = ({ isDark, setIsDark, currentUser, loading, level, road
 
 const StatCard = ({ icon: Icon, label, value, color }) => {
   return (
-    <div className="p-6 rounded-xl border border-primary/10 bg-card shadow-soft hover:shadow-soft-lg transition-shadow">
-      <div className="flex items-center justify-between mb-4">
-        <div className={`p-2 rounded-lg ${color === 'primary' ? 'bg-primary/10' : 'bg-secondary/20'}`}>
-          <Icon className={`h-5 w-5 ${color === 'primary' ? 'text-primary' : 'text-secondary'}`} />
+    <div className="p-8 rounded-2xl border border-primary/10 bg-card shadow-soft hover:shadow-soft-lg transition-shadow">
+      <div className="flex items-center justify-between mb-5">
+        <div className={`p-3 rounded-xl ${color === 'primary' ? 'bg-primary/10' : 'bg-secondary/20'}`}>
+          <Icon className={`h-6 w-6 ${color === 'primary' ? 'text-primary' : 'text-secondary'}`} />
         </div>
-        <TrendingUp className="h-4 w-4 text-emerald-500" />
+        <TrendingUp className="h-5 w-5 text-emerald-500" />
       </div>
-      <h3 className="font-medium text-body mb-1">{label}</h3>
-      <p className="text-2xl font-bold text-heading">{value}</p>
+      <h3 className="font-medium text-base text-body mb-2">{label}</h3>
+      <p className="text-3xl font-bold text-heading">{value}</p>
     </div>
   )
 }
