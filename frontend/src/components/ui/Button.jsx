@@ -9,7 +9,7 @@ function Button({
     primary:
       'bg-primary text-white hover:bg-primary-hover shadow-soft hover:shadow-soft-lg focus-visible:ring-primary/40',
     secondary:
-      'bg-white text-primary border border-primary/20 hover:bg-primary/5 focus-visible:ring-primary/30',
+      'bg-secondary text-primary border border-primary/20 hover:bg-primary/10 focus-visible:ring-primary/30',
     ghost:
       'bg-transparent text-primary hover:bg-primary/5 focus-visible:ring-primary/30',
   }

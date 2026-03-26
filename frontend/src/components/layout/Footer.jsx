@@ -31,7 +31,7 @@ const socials = [
 
 function Footer() {
   return (
-    <footer className="border-t border-primary/10 bg-white">
+    <footer className="border-t border-primary/10 bg-secondary/10">
       {/* Main Footer */}
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="grid gap-10 md:grid-cols-5">
@@ -84,7 +84,7 @@ function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-primary/5 bg-section/30">
+      <div className="border-t border-primary/5 bg-secondary/20">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-4 text-xs text-body sm:flex-row sm:px-6">
           <p>© {new Date().getFullYear()} HackMate. All rights reserved.</p>
           <p>

@@ -16,8 +16,8 @@ function AppRoutes() {
       <Route path="/" element={<Landing />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route element={<DashboardLayout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/events" element={<Opportunities />} />
         <Route path="/opportunities" element={<Navigate to="/events" replace />} />

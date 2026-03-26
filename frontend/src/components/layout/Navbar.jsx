@@ -18,7 +18,7 @@ function Navbar() {
   ]
 
   return (
-    <header className="sticky top-0 z-20 border-b border-primary/10 bg-white/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-20 border-b border-primary/10 bg-secondary/20 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link to="/" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
@@ -70,7 +70,7 @@ function Navbar() {
       </nav>
 
       {isOpen && (
-        <div className="border-t border-primary/10 bg-white px-4 py-3 md:hidden">
+        <div className="border-t border-primary/10 bg-secondary/10 px-4 py-3 md:hidden">
           <div className="flex flex-col gap-3">
             {links.map((link) => (
               <Link

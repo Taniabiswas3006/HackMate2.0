@@ -19,7 +19,7 @@ const navItems = [
 
 function Sidebar() {
   return (
-    <aside className="w-full border-b border-primary/10 bg-white p-4 md:min-h-screen md:w-64 md:border-b-0 md:border-r">
+    <aside className="w-full border-b border-primary/10 bg-secondary/10 p-4 md:min-h-screen md:w-64 md:border-b-0 md:border-r">
       <div className="mb-6 flex items-center gap-2 px-3">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
           <LayoutDashboard className="h-4 w-4 text-primary" />

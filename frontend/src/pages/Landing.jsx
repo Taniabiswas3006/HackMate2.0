@@ -104,10 +104,7 @@ function Landing() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8">
             {/* Left Side: Text */}
             <div className="animate-fade-in-up md:max-w-2xl lg:max-w-none">
-              <span className="mb-5 inline-flex items-center gap-1.5 rounded-full bg-white/80 px-4 py-1.5 text-xs font-medium text-primary shadow-soft backdrop-blur-sm">
-                <Sparkles className="h-3.5 w-3.5" />
-                Built for Students
-              </span>
+              {/* Built for Students badge removed */}
 
               <h1 className="text-5xl font-bold leading-tight tracking-tight text-heading sm:text-6xl lg:text-7xl">
                 HackMate
@@ -133,11 +130,7 @@ function Landing() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <a href="#features">
-                  <Button variant="secondary" className="px-8 py-3 text-base">
-                    Explore
-                  </Button>
-                </a>
+                {/* Explore button removed */}
               </div>
             </div>
 
@@ -156,21 +149,14 @@ function Landing() {
       </section>
 
       {/* ───── PROBLEM ───── */}
-      <section className="bg-white py-20">
+      <section className="bg-secondary/10 py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center">
-            <span className="mb-2 inline-block rounded-full bg-highlight/15 px-4 py-1 text-xs font-medium text-pink-600">
-              The Problem
-            </span>
-            <h2 className="text-3xl font-bold text-heading sm:text-4xl">
-              Sound familiar?
-            </h2>
-            <p className="mx-auto mt-3 max-w-lg text-body">
-              Most students face these challenges — and we built HackMate to solve them.
-            </p>
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-heading sm:text-4xl">Common Student Challenges</h2>
+            <p className="mx-auto mt-3 max-w-lg text-body">These are the most frequent obstacles students face on their learning journey.</p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
             {problems.map((p) => (
               <div
                 key={p.title}
@@ -188,7 +174,7 @@ function Landing() {
       </section>
 
       {/* ───── HOW IT WORKS ───── */}
-      <section className="bg-section py-20">
+      <section className="bg-secondary/20 py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center">
             <span className="mb-2 inline-block rounded-full bg-primary/15 px-4 py-1 text-xs font-medium text-primary">
@@ -223,40 +209,32 @@ function Landing() {
         </div>
       </section>
 
-      {/* ───── FEATURES ───── */}
-      <section id="features" className="bg-white py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center">
-            <span className="mb-2 inline-block rounded-full bg-accent/15 px-4 py-1 text-xs font-medium text-emerald-600">
-              Features
-            </span>
-            <h2 className="text-3xl font-bold text-heading sm:text-4xl">
-              Everything you need to grow
-            </h2>
-            <p className="mx-auto mt-3 max-w-lg text-body">
-              Tools designed to help students build skills, find opportunities, and connect with peers.
-            </p>
-          </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {features.map((f) => (
-              <div
-                key={f.title}
-                className="rounded-2xl border border-primary/10 bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg"
-              >
-                <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${f.color}`}>
-                  <f.icon className="h-6 w-6" />
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-heading">{f.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-body">{f.desc}</p>
-              </div>
-            ))}
+      {/* ───── SKILL ROADMAP ENHANCED ───── */}
+      <section className="bg-main py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <h2 className="text-3xl font-bold text-heading sm:text-4xl mb-2">Skill Roadmap</h2>
+          <p className="mb-8 text-body">Track each skill with status-based milestones.</p>
+          <div className="rounded-3xl border border-primary/10 bg-white/90 dark:bg-card p-8 shadow-soft-lg transition-all hover:shadow-xl">
+            <div className="mb-4">
+              <span className="block text-lg font-semibold text-heading">WebDevelopment</span>
+              <span className="block text-sm text-body/80">Level: Intermediate</span>
+            </div>
+            <ul className="mb-2 ml-4 list-disc text-primary/90 text-base space-y-1">
+              <li>Learn React.js and component-based architecture</li>
+              <li>Work with Node.js and Express for backend</li>
+              <li>Build REST APIs and connect frontend with backend</li>
+              <li className="font-semibold text-primary">+2 more topics...</li>
+            </ul>
+            <Link to="/roadmap" className="mt-4 inline-block text-primary font-medium hover:underline text-sm">
+              Click to view detailed roadmap &rarr;
+            </Link>
           </div>
         </div>
       </section>
 
       {/* ───── WHY HACKMATE ───── */}
-      <section className="bg-section py-20">
+      <section className="bg-secondary/20 py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
@@ -289,12 +267,10 @@ function Landing() {
       </section>
 
       {/* ───── STATS ───── */}
-      <section className="bg-white py-20">
+      <section className="bg-secondary/10 py-20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="text-center">
-            <span className="mb-2 inline-block rounded-full bg-primary/15 px-4 py-1 text-xs font-medium text-primary">
-              Social Proof
-            </span>
+            {/* Social Proof badge removed */}
             <h2 className="text-3xl font-bold text-heading sm:text-4xl">
               Join a growing community
             </h2>

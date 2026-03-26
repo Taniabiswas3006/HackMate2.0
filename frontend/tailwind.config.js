@@ -4,16 +4,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#7C9DFF',
-        'primary-hover': '#5A7CFF',
-        secondary: '#C8B6FF',
-        accent: '#A8E6CF',
-        highlight: '#FFB7C5',
+        primary: '#00537A',
+        'primary-hover': '#00425F',
+        secondary: '#F3A102',
+        'secondary-hover': '#D88F02',
+        accent: '#00537A', // Use primary as accent
+        highlight: '#F3A102', // Use secondary as highlight
         main: '#F8FAFF',
         card: '#FFFFFF',
-        section: '#EEF2FF',
-        heading: '#1E293B',
-        body: '#64748B',
+        section: '#F3A1021A', // secondary with opacity for subtle backgrounds
+        heading: '#00537A',
+        body: '#00537A99', // primary with opacity for body text
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
