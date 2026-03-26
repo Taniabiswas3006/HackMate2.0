@@ -98,9 +98,12 @@ function SignUp() {
 
     return (
         <div className="flex min-h-screen flex-col bg-main">
+            {/* Yellow shade decoration */}
+            <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-secondary/10 to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-1/4 left-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
 
-
-            <div className="flex flex-1 items-center justify-center px-4 py-12">
+            <div className="flex flex-1 items-center justify-center px-4 py-12 relative">
                 <div className="w-full max-w-lg animate-fade-in-up">
                     {/* Header */}
                     <div className="mb-8 text-center">
