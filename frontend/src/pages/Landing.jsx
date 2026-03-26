@@ -114,7 +114,7 @@ function Landing() {
           <div className="mt-10 flex items-center gap-x-4">
             <Link to="/signup">
               <Button className="px-8 py-3 text-base bg-white text-primary hover:bg-white/90">
-                Get Started
+                Get Start
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
@@ -249,7 +249,7 @@ function Landing() {
           <div className="mt-8">
             <Link to="/signup">
               <Button className="px-10 py-3.5 text-base bg-white text-primary hover:bg-white/90">
-                Get Started
+                Get Start
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
