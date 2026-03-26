@@ -67,18 +67,39 @@ function getEvents(interests, level) {
  */
 async function getPeers(interests, currentUserId) {
   try {
-    // Query users where interests JSONB contains at least one matching interest
-    // PostgreSQL equivalent: use @> operator for JSONB containment or ANY for array matching
-    const query = `
-      SELECT id, name, email, phone, gender, branch, department, year, interests
-      FROM users
-      WHERE id != $1 AND interests ?| $2::text[]
-    `;
-    const params = [currentUserId, interests];
+    let query
+    let params
+
+    if (!Array.isArray(interests) || interests.length === 0) {
+      query = `
+        SELECT id, name, email, phone, gender, branch, department, year, interests
+        FROM users
+        WHERE id != $1
+        ORDER BY id
+        LIMIT 50
+      `
+      params = [currentUserId]
+    } else {
+      // Normalize interests: lowercase and trimmed for generalized, robust matching across all departments.
+      const normalizedInterests = interests
+        .filter(Boolean)
+        .map((interest) => interest.toString().trim().toLowerCase());
+
+      // Only show peers who have at least one shared interest with the current user
+      // No other peers should be shown.
+      query = `
+        SELECT id, name, email, phone, gender, branch, department, year, interests
+        FROM users
+        WHERE id != $1 AND EXISTS (
+          SELECT 1 FROM jsonb_array_elements_text(interests) AS t(interest)
+          WHERE lower(trim(t.interest)) = ANY($2::text[])
+        )
+      `
+      params = [currentUserId, normalizedInterests]
+    }
 
     const result = await pool.query(query, params);
 
-    // Format the results similar to formatUser in authController
     return result.rows.map(user => ({
       id: user.id,
       name: user.name,

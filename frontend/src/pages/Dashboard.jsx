@@ -39,7 +39,7 @@ const Dashboard = () => {
   useEffect(() => {
     const loadDashboard = async () => {
       setLoading(true)
-      if (!branch || interests.length === 0) {
+      if (!branch) {
         setLoading(false)
         return
       }

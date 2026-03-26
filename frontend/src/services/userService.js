@@ -5,7 +5,7 @@ import api from './api.js'
  * Falls back to local JSON if no user context is available.
  */
 export async function getSuggestedPeers(branch, year, interests) {
-  if (!branch || !year || !interests || interests.length === 0) {
+  if (!branch || !year || !Array.isArray(interests)) {
     return []
   }
 

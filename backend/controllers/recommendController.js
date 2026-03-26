@@ -17,7 +17,7 @@ async function recommend(req, res) {
     const currentUserId = req.user.id;
 
     // ── Input validation ──────────────────────────────────
-    if (!branch || !year || !interests) {
+    if (!branch || !year || interests === undefined || interests === null) {
       return res.status(400).json({
         success: false,
         message:
@@ -25,10 +25,10 @@ async function recommend(req, res) {
       });
     }
 
-    if (!Array.isArray(interests) || interests.length === 0) {
+    if (!Array.isArray(interests)) {
       return res.status(400).json({
         success: false,
-        message: "interests must be a non-empty array.",
+        message: "interests must be an array.",
       });
     }
 
