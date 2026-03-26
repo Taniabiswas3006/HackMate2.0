@@ -1,5 +1,5 @@
 import { CheckCircle2, CircleDashed, CircleDot } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Card from '../components/ui/Card.jsx'
 import Loader from '../components/ui/Loader.jsx'
 import SkillRoadmapDetail from '../components/ui/SkillRoadmapDetail.jsx'
@@ -27,24 +27,26 @@ function Roadmap() {
   const [loading, setLoading] = useState(true)
   const [selectedSkill, setSelectedSkill] = useState(null)
 
-  const branch = currentUser.department || currentUser.branch
-  const numericYear = parseInt(String(currentUser.year).replace(/\D/g, ''), 10) || 2
-  const interests = currentUser.interests || []
-
   useEffect(() => {
+    const branch = currentUser.department || currentUser.branch
+    const numericYear = parseInt(String(currentUser.year).replace(/\D/g, ''), 10) || 2
+    const interests = currentUser.interests || []
+
     let active = true
-    setLoading(true)
 
-    getRoadmap(branch, numericYear, interests)
-      .then((data) => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const data = await getRoadmap(branch, numericYear, interests)
         if (active) setRoadmap(data || [])
-      })
-      .finally(() => {
+      } finally {
         if (active) setLoading(false)
-      })
+      }
+    }
 
+    fetchData()
     return () => { active = false }
-  }, [branch, numericYear, interests])
+  }, [currentUser])
 
   if (loading) {
     return <Loader text="Loading roadmap..." />

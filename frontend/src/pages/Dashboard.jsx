@@ -1,5 +1,5 @@
 import { CheckCircle2, CircleDashed, CircleDot } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import ProfileCard from '../components/ui/ProfileCard.jsx'
 import EventCard from '../components/ui/EventCard.jsx'
 import PeerCard from '../components/ui/PeerCard.jsx'
@@ -23,14 +23,17 @@ function Dashboard() {
   const [peers, setPeers] = useState([])
   const [error, setError] = useState(null)
 
-  // Derive the numeric year from the user's year string (e.g. "3rd Year" → 3)
-  const numericYear = parseInt(String(currentUser.year).replace(/\D/g, ''), 10) || 2
+  const numericYear = useMemo(() => 
+    parseInt(String(currentUser.year).replace(/\D/g, ''), 10) || 2
+  , [currentUser.year])
 
-  // The branch key the backend expects (department or branch)
-  const branch = currentUser.department || currentUser.branch
+  const branch = useMemo(() => 
+    currentUser.department || currentUser.branch
+  , [currentUser.department, currentUser.branch])
 
-  // Interests array
-  const interests = currentUser.interests || []
+  const interests = useMemo(() => 
+    currentUser.interests || []
+  , [currentUser.interests])
 
   useEffect(() => {
     const loadDashboard = async () => {

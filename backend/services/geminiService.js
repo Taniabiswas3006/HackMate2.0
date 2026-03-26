@@ -3,8 +3,8 @@ require("dotenv").config();
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-// ── Use gemini-2.5-flash-lite for best free-tier limits (1000 RPD, 15 RPM) ──
-const GEMINI_MODEL = "gemini-3.0-flash";
+// ── Use gemini-2.5-flash for best free-tier limits ──
+const GEMINI_MODEL = "gemini-2.5-flash";
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
 // ── Retry configuration with aggressive backoff for rate limiting ──

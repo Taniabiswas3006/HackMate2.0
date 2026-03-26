@@ -30,12 +30,6 @@ async function signup(req, res) {
       return res.status(400).json({ success: false, message: "Missing required fields." });
     }
 
-    // Check if user exists
-    const existing = await pool.query("SELECT id FROM users WHERE email = $1", [email]);
-    if (existing.rows.length > 0) {
-      return res.status(400).json({ success: false, message: "Email already exists." });
-    }
-
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -58,8 +52,8 @@ async function signup(req, res) {
       user: formatUser(user),
     });
   } catch (error) {
-    console.error("Signup Error:", error);
-    res.status(500).json({ success: false, message: "Server error during signup." });
+    console.error("Signup Error:", error.message, error.stack);
+    res.status(500).json({ success: false, message: error.message || "Server error during signup." });
   }
 }
 

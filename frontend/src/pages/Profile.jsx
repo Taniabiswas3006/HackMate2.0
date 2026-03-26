@@ -22,29 +22,31 @@ function Profile() {
     interests: currentUser.interests || [],
   }))
 
+  // Auto-select first branch when data loads
+  useEffect(() => {
+    if (!formValues.branch && Object.keys(branchInterestsMap).length > 0) {
+      setFormValues((prev) => ({ ...prev, branch: Object.keys(branchInterestsMap)[0] }))
+    }
+  }, [branchInterestsMap, formValues.branch])
+
   // Fetch all branches and their interests on mount
   useEffect(() => {
     let active = true
-    setLoadingInterests(true)
-    setFetchError(null)
 
-    getAllBranchInterests()
-      .then((data) => {
-        if (active) {
-          setBranchInterestsMap(data)
-          // If the user's branch isn't set yet, auto-select the first branch
-          if (!formValues.branch && Object.keys(data).length > 0) {
-            setFormValues((prev) => ({ ...prev, branch: Object.keys(data)[0] }))
-          }
-        }
-      })
-      .catch((err) => {
+    const fetchData = async () => {
+      setLoadingInterests(true)
+      setFetchError(null)
+      try {
+        const data = await getAllBranchInterests()
+        if (active) setBranchInterestsMap(data)
+      } catch (err) {
         if (active) setFetchError(err.message || 'Failed to load interests')
-      })
-      .finally(() => {
+      } finally {
         if (active) setLoadingInterests(false)
-      })
+      }
+    }
 
+    fetchData()
     return () => { active = false }
   }, [])
 

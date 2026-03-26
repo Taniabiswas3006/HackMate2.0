@@ -76,7 +76,7 @@ function SignUp() {
             setError('Please select at least one interest')
             return
         }
-        const { confirmPassword, ...userData } = formData
+        const { confirmPassword: _, ...userData } = formData
         
         try {
             await signup({
@@ -89,9 +89,6 @@ function SignUp() {
             setError(err.message || 'Failed to sign up')
         }
     }
-
-    const inputClasses =
-        'w-full rounded-xl border border-primary/20 bg-card px-4 py-3 text-sm text-heading outline-none transition-all duration-200 placeholder:text-body/50 focus:border-primary focus:ring-2 focus:ring-primary/15'
 
     const inputWithIconClasses =
         'w-full rounded-xl border border-primary/20 bg-card px-4 py-3 pl-11 text-sm text-heading outline-none transition-all duration-200 placeholder:text-body/50 focus:border-primary focus:ring-2 focus:ring-primary/15'

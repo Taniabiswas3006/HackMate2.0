@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+    import { motion } from 'framer-motion' // eslint-disable-line no-unused-vars
+    import { useEffect, useRef, useState } from 'react'
 
 const techImages = [
     'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=600&auto=format&fit=crop', // Group learning / hackathon
@@ -41,11 +41,6 @@ export function ShuffleGrid() {
     const timeoutRef = useRef(null)
     const [squares, setSquares] = useState(generateSquares)
 
-    useEffect(() => {
-        shuffleSquares()
-        return () => clearTimeout(timeoutRef.current)
-    }, [])
-
     const shuffleSquares = () => {
         setSquares((prevSquares) => {
             // Pick a random square to replace
@@ -69,6 +64,12 @@ export function ShuffleGrid() {
 
         timeoutRef.current = setTimeout(shuffleSquares, 3000)
     }
+
+    useEffect(() => {
+        shuffleSquares()
+        return () => clearTimeout(timeoutRef.current)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <div className="grid h-[450px] w-full grid-cols-3 grid-rows-3 gap-2 sm:h-[550px] md:gap-3">

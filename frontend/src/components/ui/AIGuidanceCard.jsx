@@ -10,19 +10,41 @@ function AIGuidanceCard({ branch, year, interest }) {
   const fetchGuidance = useCallback(() => {
     if (!branch || !year || !interest) return
 
+    let active = true
     setLoading(true)
     setError(null)
     setAdvice(null)
 
     getAIGuidance(branch, year, interest)
-      .then((result) => setAdvice(result))
-      .catch((err) => setError(err.message || 'Failed to get AI guidance'))
-      .finally(() => setLoading(false))
+      .then((result) => { if (active) setAdvice(result) })
+      .catch((err) => { if (active) setError(err.message || 'Failed to get AI guidance') })
+      .finally(() => { if (active) setLoading(false) })
+
+    return () => { active = false }
   }, [branch, year, interest])
 
   useEffect(() => {
-    fetchGuidance()
-  }, [fetchGuidance])
+    if (!branch || !year || !interest) return
+
+    let active = true
+
+    const fetchData = async () => {
+      setLoading(true)
+      setError(null)
+      setAdvice(null)
+      try {
+        const result = await getAIGuidance(branch, year, interest)
+        if (active) setAdvice(result)
+      } catch (err) {
+        if (active) setError(err.message || 'Failed to get AI guidance')
+      } finally {
+        if (active) setLoading(false)
+      }
+    }
+
+    fetchData()
+    return () => { active = false }
+  }, [branch, year, interest])
 
   if (!branch || !year || !interest) return null
 

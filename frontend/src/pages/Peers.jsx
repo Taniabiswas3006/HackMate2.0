@@ -19,24 +19,26 @@ function Peers() {
   const [peers, setPeers] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const branch = currentUser.department || currentUser.branch
-  const numericYear = parseInt(String(currentUser.year).replace(/\D/g, ''), 10) || 2
-  const interests = currentUser.interests || []
-
   useEffect(() => {
+    const branch = currentUser.department || currentUser.branch
+    const numericYear = parseInt(String(currentUser.year).replace(/\D/g, ''), 10) || 2
+    const interests = currentUser.interests || []
+
     let active = true
-    setLoading(true)
 
-    getSuggestedPeers(branch, numericYear, interests)
-      .then((data) => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const data = await getSuggestedPeers(branch, numericYear, interests)
         if (active) setPeers(data || [])
-      })
-      .finally(() => {
+      } finally {
         if (active) setLoading(false)
-      })
+      }
+    }
 
+    fetchData()
     return () => { active = false }
-  }, [branch, numericYear, interests])
+  }, [currentUser])
 
   if (loading) {
     return <Loader text="Loading peers..." />

@@ -1,5 +1,5 @@
 import { ChevronLeft, BookOpen, Code2, Zap, Target, AlertCircle } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../../context/useAuth.js'
 import { getGeminiRoadmap } from '../../services/geminiRoadmapService.js'
 import Loader from './Loader.jsx'
@@ -126,7 +126,7 @@ function SkillRoadmapDetail({ skill, level, onBack }) {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-              {data.topics.map((topic, idx) => (
+              {roadmap.topics.map((topic, idx) => (
                 <div
                   key={idx}
                   className="rounded-xl border border-primary/10 bg-card p-5 shadow-soft transition-all hover:border-primary/20 hover:shadow-md"
@@ -163,7 +163,7 @@ function SkillRoadmapDetail({ skill, level, onBack }) {
             </div>
 
             <div className="space-y-4">
-              {data.practical.map((project, idx) => (
+              {roadmap.practical.map((project, idx) => (
                 <div
                   key={idx}
                   className="rounded-xl border border-accent/10 bg-card p-5 shadow-soft"
@@ -216,14 +216,14 @@ function SkillRoadmapDetail({ skill, level, onBack }) {
                 <p className="text-xs font-medium uppercase text-primary/80 mb-2">
                   Topics to Master
                 </p>
-                <p className="text-2xl font-bold text-heading">{data.topics.length}</p>
+                <p className="text-2xl font-bold text-heading">{roadmap.topics.length}</p>
               </div>
 
               <div className="rounded-lg bg-accent/5 p-4">
                 <p className="text-xs font-medium uppercase text-accent/80 mb-2">
                   Practical Projects
                 </p>
-                <p className="text-2xl font-bold text-heading">{data.practical.length}</p>
+                <p className="text-2xl font-bold text-heading">{roadmap.practical.length}</p>
               </div>
 
               <div className="rounded-lg bg-section/20 p-4">
