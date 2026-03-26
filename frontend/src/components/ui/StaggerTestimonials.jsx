@@ -2,79 +2,57 @@
 
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const testimonials = [
   {
     tempId: 0,
     title: "Skill Roadmap",
     desc: "A personalized checklist guiding you from beginner to job-ready, one skill at a time.",
-    imgSrc: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&auto=format&fit=crop&q=80"
+    imgSrc: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&auto=format&fit=crop&q=80",
+    route: "/roadmap"
   },
   {
     tempId: 1,
-    title: "Opportunity Discovery",
-    desc: "Curated hackathons, internships, and events matched to your skill level and interests.",
-    imgSrc: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&auto=format&fit=crop&q=80"
+    title: "AI Guidance",
+    desc: "Get personalized AI-powered insights and recommendations for your learning journey.",
+    imgSrc: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&auto=format&fit=crop&q=80",
+    route: "/dashboard"
   },
   {
     tempId: 2,
-    title: "Peer Connect",
+    title: "Peer Connection",
     desc: "Find teammates with complementary skills and build stronger project teams together.",
-    imgSrc: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&auto=format&fit=crop&q=80"
+    imgSrc: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&auto=format&fit=crop&q=80",
+    route: "/peers"
   },
   {
     tempId: 3,
-    title: "AI Guidance",
-    desc: "Get personalized AI-powered insights and recommendations for your learning journey.",
-    imgSrc: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&auto=format&fit=crop&q=80"
+    title: "Dashboard",
+    desc: "Track your progress and view personalized recommendations in one place.",
+    imgSrc: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop&q=80",
+    route: "/dashboard"
   },
   {
     tempId: 4,
-    title: "Achievements",
-    desc: "Track your progress with badges and streaks as you complete milestones.",
-    imgSrc: "https://images.unsplash.com/photo-1567427017947-545c5f2d4e19?w=400&auto=format&fit=crop&q=80"
+    title: "Collaboration",
+    desc: "Find the perfect team for your next big project.",
+    imgSrc: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&auto=format&fit=crop&q=80",
+    route: "/peers"
   },
   {
     tempId: 5,
-    title: "Community",
-    desc: "Join a thriving community of learners and share your experiences.",
-    imgSrc: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&auto=format&fit=crop&q=80"
+    title: "Achievements",
+    desc: "Track your progress with badges and streaks as you complete milestones.",
+    imgSrc: "https://images.unsplash.com/photo-1567427017947-545c5f2d4e19?w=400&auto=format&fit=crop&q=80",
+    route: "/dashboard"
   },
   {
     tempId: 6,
     title: "Resources",
     desc: "Access curated tutorials, courses, and learning materials.",
-    imgSrc: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&auto=format&fit=crop&q=80"
-  },
-  {
-    tempId: 7,
-    title: "Mentorship",
-    desc: "Connect with experienced mentors to guide your tech career.",
-    imgSrc: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&auto=format&fit=crop&q=80"
-  },
-  {
-    tempId: 8,
-    title: "Projects",
-    desc: "Showcase your projects and get feedback from peers and experts.",
-    imgSrc: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format&fit=crop&q=80"
-  },
-  {
-    tempId: 9,
-    title: "Events",
-    desc: "Stay updated with upcoming hackathons, workshops, and tech events.",
-    imgSrc: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&auto=format&fit=crop&q=80"
-  },
-  {
-    tempId: 10,
-    title: "Collaboration",
-    desc: "Find the perfect team for your next big project.",
-    imgSrc: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&auto=format&fit=crop&q=80"
-  },
-  {
-    tempId: 11,
-    title: "Certification",
-    desc: "Earn certificates to validate your skills and boost your profile.",
-    imgSrc: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&auto=format&fit=crop&q=80"
+    imgSrc: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&auto=format&fit=crop&q=80",
+    route: "/roadmap"
   }
 ];
 
@@ -87,17 +65,27 @@ const TestimonialCard = ({
   position, 
   testimonial, 
   handleMove, 
-  cardSize 
+  cardSize,
+  navigate
 }) => {
   const isCenter = position === 0;
+  const isClickable = isCenter;
 
   const transformStyle = isCenter 
     ? `translate(-50%, -50%) translateX(${(cardSize / 1.5) * position}px) translateY(-65px) rotate(0deg)`
     : `translate(-50%, -50%) translateX(${(cardSize / 1.5) * position}px) translateY(${position % 2 ? 15 : -15}px) rotate(${position % 2 ? 2.5 : -2.5}deg)`;
 
+  const handleClick = () => {
+    if (isClickable && testimonial.route) {
+      navigate(testimonial.route);
+    } else if (!isClickable) {
+      handleMove(position);
+    }
+  };
+
   return (
     <div
-      onClick={() => handleMove(position)}
+      onClick={handleClick}
       className={`absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 transition-all duration-500 ease-in-out ${
         isCenter 
           ? cardVariants.center
@@ -122,6 +110,11 @@ const TestimonialCard = ({
       <p className={`mt-2 text-sm ${isCenter ? "text-white/80" : "text-body"}`}>
         {testimonial.desc}
       </p>
+      {isCenter && (
+        <p className={`mt-4 text-sm font-medium ${isCenter ? "text-white/80" : "text-primary"}`}>
+          Click to explore →
+        </p>
+      )}
     </div>
   );
 };
@@ -129,6 +122,7 @@ const TestimonialCard = ({
 export const StaggerTestimonials = () => {
   const [cardSize, setCardSize] = useState(300);
   const [testimonialsList, setTestimonialsList] = useState(testimonials);
+  const navigate = useNavigate();
 
   const handleMove = (steps) => {
     const newList = [...testimonialsList];
@@ -175,6 +169,7 @@ export const StaggerTestimonials = () => {
             handleMove={handleMove}
             position={position}
             cardSize={cardSize}
+            navigate={navigate}
           />
         );
       })}

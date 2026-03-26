@@ -6,22 +6,22 @@ export default {
       colors: {
         primary: '#00537A',
         'primary-hover': '#00425F',
-        secondary: '#F3A102',
-        'secondary-hover': '#D88F02',
-        accent: '#00537A', // Use primary as accent
-        highlight: '#F3A102', // Use secondary as highlight
+        secondary: '#D9A600',
+        'secondary-hover': '#B8860B',
+        highlight: '#D9A600',
+        section: '#D9A6001A',
         main: '#F8FAFF',
         card: '#FFFFFF',
-        section: '#F3A1021A', // secondary with opacity for subtle backgrounds
+        section: '#FFC2001A',
         heading: '#00537A',
-        body: '#00537A99', // primary with opacity for body text
+        body: '#00537ACC',
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
       },
       boxShadow: {
-        soft: '0 2px 16px 0 rgba(124,157,255,0.08)',
-        'soft-lg': '0 4px 24px 0 rgba(124,157,255,0.12)',
+        soft: '0 2px 16px 0 rgba(0,83,122,0.08)',
+        'soft-lg': '0 4px 24px 0 rgba(0,83,122,0.12)',
       },
       borderRadius: {
         '2xl': '1rem',
