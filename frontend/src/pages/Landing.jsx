@@ -1,3 +1,4 @@
+import Navbar from '../components/layout/Navbar.jsx'
 import {
   ArrowRight,
   BookOpen,
@@ -18,7 +19,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import Navbar from '../components/layout/Navbar.jsx'
+
 import Footer from '../components/layout/Footer.jsx'
 import Button from '../components/ui/Button.jsx'
 import { ShuffleGrid } from '../components/ui/ShuffleGrid.jsx'

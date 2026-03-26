@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
-import Navbar from '../components/layout/Navbar.jsx'
+
 import Footer from '../components/layout/Footer.jsx'
 import Button from '../components/ui/Button.jsx'
 import { useAuth } from '../context/useAuth.js'
@@ -37,7 +37,7 @@ function SignIn() {
 
     return (
         <div className="flex min-h-screen flex-col bg-main">
-            <Navbar />
+
 
             <div className="flex flex-1 items-center justify-center px-4 py-16">
                 <div className="w-full max-w-md animate-fade-in-up">

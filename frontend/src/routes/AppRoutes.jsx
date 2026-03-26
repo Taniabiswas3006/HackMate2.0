@@ -16,14 +16,15 @@ function AppRoutes() {
       <Route path="/" element={<Landing />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/dashboard" element={<Dashboard />} />
       <Route element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/events" element={<Opportunities />} />
         <Route path="/opportunities" element={<Navigate to="/events" replace />} />
         <Route path="/peers" element={<Peers />} />
         <Route path="/peers/:id" element={<PeerProfile />} />
         <Route path="/profile" element={<Profile />} />
+        {/* Achievements route placeholder */}
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
