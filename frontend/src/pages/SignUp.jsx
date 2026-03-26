@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User, Mail, Phone, Lock, Eye, EyeOff } from 'lucide-react'
 
+import Footer from '../components/layout/Footer.jsx'
 import Button from '../components/ui/Button.jsx'
 import { useAuth } from '../context/useAuth.js'
 import { getAllBranchInterests } from '../services/interestService.js'
@@ -329,6 +330,8 @@ function SignUp() {
                     </div>
                 </div>
             </div>
+
+            <Footer />
         </div>
     )
 }
