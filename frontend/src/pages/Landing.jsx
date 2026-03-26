@@ -184,9 +184,6 @@ function Landing() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
-              <span className="mb-2 inline-block rounded-full bg-secondary/15 px-4 py-1 text-xs font-medium text-secondary">
-                Why HackMate
-              </span>
               <h2 className="text-3xl font-bold text-heading sm:text-4xl">
                 Built different, for students
               </h2>
