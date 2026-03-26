@@ -1,5 +1,6 @@
 import { Outlet, Link } from 'react-router-dom'
 import Sidebar from './Sidebar.jsx'
+import Footer from './Footer.jsx'
 import { useAuth } from '../../context/useAuth.js'
 import Button from '../ui/Button.jsx'
 
@@ -31,13 +32,16 @@ function DashboardLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-main md:flex">
-      <Sidebar />
-      <main className="flex-1 overflow-y-auto">
-        <div className="mx-auto w-full p-6 lg:p-8">
-          <Outlet />
-        </div>
-      </main>
+    <div className="min-h-screen bg-main flex flex-col">
+      <div className="flex flex-1 md:flex">
+        <Sidebar />
+        <main className="flex-1 overflow-y-auto">
+          <div className="mx-auto w-full p-6 lg:p-8">
+            <Outlet />
+          </div>
+        </main>
+      </div>
+      <Footer />
     </div>
   )
 }
