@@ -54,9 +54,11 @@ function Navbar() {
               </button>
             </div>
           ) : (
-            <Link to="/signin">
-              <Button className="px-5 py-2">Sign In</Button>
-            </Link>
+            <div className="ml-4">
+              <Link to="/signin">
+                <Button className="px-5 py-2">Sign In</Button>
+              </Link>
+            </div>
           )}
         </div>
 
