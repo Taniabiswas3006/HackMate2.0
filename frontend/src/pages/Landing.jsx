@@ -174,66 +174,6 @@ function Landing() {
         </div>
       </section>
 
-      {/* ───── HOW IT WORKS ───── */}
-      <section className="bg-secondary/20 py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center">
-            <span className="mb-2 inline-block rounded-full bg-primary/15 px-4 py-1 text-xs font-medium text-primary">
-              How It Works
-            </span>
-            <h2 className="text-3xl font-bold text-heading sm:text-4xl">
-              Three simple steps
-            </h2>
-            <p className="mx-auto mt-3 max-w-lg text-body">
-              Getting started takes less than 2 minutes.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {steps.map((s, i) => (
-              <div key={s.num} className="relative text-center">
-                {/* Connector line for desktop */}
-                {i < steps.length - 1 && (
-                  <div className="absolute right-0 top-12 hidden h-0.5 w-8 translate-x-full bg-primary/15 md:block" />
-                )}
-                <div className={`mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${s.color}`}>
-                  <s.icon className="h-8 w-8 text-heading/70" />
-                </div>
-                <span className="mt-4 block text-xs font-semibold uppercase tracking-widest text-primary">
-                  Step {s.num}
-                </span>
-                <h3 className="mt-2 text-lg font-semibold text-heading">{s.title}</h3>
-                <p className="mt-2 text-sm text-body">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* ───── SKILL ROADMAP ENHANCED ───── */}
-      <section className="bg-main py-20">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6">
-          <h2 className="text-3xl font-bold text-heading sm:text-4xl mb-2">Skill Roadmap</h2>
-          <p className="mb-8 text-body">Track each skill with status-based milestones.</p>
-          <div className="rounded-3xl border border-primary/10 bg-white/90 dark:bg-card p-8 shadow-soft-lg transition-all hover:shadow-xl">
-            <div className="mb-4">
-              <span className="block text-lg font-semibold text-heading">WebDevelopment</span>
-              <span className="block text-sm text-body/80">Level: Intermediate</span>
-            </div>
-            <ul className="mb-2 ml-4 list-disc text-primary/90 text-base space-y-1">
-              <li>Learn React.js and component-based architecture</li>
-              <li>Work with Node.js and Express for backend</li>
-              <li>Build REST APIs and connect frontend with backend</li>
-              <li className="font-semibold text-primary">+2 more topics...</li>
-            </ul>
-            <Link to="/roadmap" className="mt-4 inline-block text-primary font-medium hover:underline text-sm">
-              Click to view detailed roadmap &rarr;
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ───── WHY HACKMATE ───── */}
       <section className="bg-secondary/20 py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
