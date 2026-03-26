@@ -38,9 +38,9 @@ function SignIn() {
     return (
         <div className="flex min-h-screen flex-col bg-main">
             {/* Yellow shade decoration */}
-            <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-secondary/10 to-transparent pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute top-1/4 left-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-64 bg-secondary/20 pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-1/4 left-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="flex flex-1 items-center justify-center px-4 py-16 relative">
                 <div className="w-full max-w-md animate-fade-in-up">
@@ -53,7 +53,7 @@ function SignIn() {
                     </div>
 
                     {/* Card */}
-                    <div className="rounded-2xl border border-primary/10 bg-card p-8 shadow-soft">
+                    <div className="rounded-2xl border-2 border-primary bg-card p-8 shadow-soft">
                         <form onSubmit={handleSubmit} className="space-y-5">
                             {error && (
                                 <div className="rounded-xl bg-highlight/15 px-4 py-2.5 text-sm text-pink-700">
