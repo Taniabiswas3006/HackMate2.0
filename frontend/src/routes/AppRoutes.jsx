@@ -24,7 +24,6 @@ function AppRoutes() {
         <Route path="/peers" element={<Peers />} />
         <Route path="/peers/:id" element={<PeerProfile />} />
         <Route path="/profile" element={<Profile />} />
-        {/* Achievements route placeholder */}
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
