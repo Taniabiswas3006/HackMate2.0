@@ -36,7 +36,7 @@ function SignIn() {
         'w-full rounded-xl border border-primary/20 bg-card px-4 py-3 pl-11 text-sm text-heading outline-none transition-all duration-200 placeholder:text-body/50 focus:border-primary focus:ring-2 focus:ring-primary/15'
 
     return (
-        <div className="flex min-h-screen flex-col bg-main">
+        <div className="flex min-h-screen flex-col bg-secondary/10">
             {/* Yellow shade decoration */}
             <div className="absolute top-0 left-0 w-full h-64 bg-secondary/20 pointer-events-none" />
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
