@@ -35,9 +35,9 @@ async function explain(req, res) {
       });
     }
 
-    const prompt = `Explain the topic "${topic}" for a ${level} level student in ${domain}. Keep it simple, practical, and under 5 sentences.`;
+    const prompt = `Explain "${topic}" for ${level} ${domain} student. Simple, practical, <5 sentences.`;
 
-    const explanation = await askGemini(prompt);
+    const explanation = await askGemini(prompt, { topic, domain, level, type: 'explanation' });
 
     return res.status(200).json({
       success: true,
@@ -70,9 +70,9 @@ async function guidance(req, res) {
       });
     }
 
-    const prompt = `A ${year} year ${branch} student interested in ${interest} wants to participate in hackathons. Give 3 simple steps they should follow.`;
+    const prompt = `${year}yr ${branch} student wants hackathon tips for ${interest}. Give 3 simple steps.`;
 
-    const advice = await askGemini(prompt);
+    const advice = await askGemini(prompt, { branch, year, interest, type: 'guidance' });
 
     return res.status(200).json({
       success: true,
@@ -105,40 +105,24 @@ async function generateRoadmap(req, res) {
       });
     }
 
-    const yearInfo = year ? `${year} year` : "student";
-    const branchInfo = branch ? `${branch} branch` : "student";
+    const yearInfo = year ? `${year}yr` : "student";
+    const branchInfo = branch ? `${branch}` : "student";
 
-    const prompt = `Generate a comprehensive personalized learning roadmap for a ${yearInfo} ${branchInfo} student interested in ${skill} at ${level} level. 
+    const prompt = `Create learning roadmap for ${yearInfo} ${branchInfo} student in ${skill} (${level}).
 
-Return ONLY a valid JSON object with this exact structure (no markdown, no code blocks, pure JSON):
+Return JSON:
 {
   "topics": [
-    {
-      "name": "Topic Name",
-      "subtopics": ["subtopic1", "subtopic2", "subtopic3"],
-      "resources": ["resource1", "resource2", "resource3"]
-    }
+    {"name": "Topic", "subtopics": ["sub1", "sub2"], "resources": ["res1", "res2"]}
   ],
   "practical": [
-    {
-      "project": "Project Name",
-      "difficulty": "Easy|Medium|Hard|Expert",
-      "duration": "X weeks",
-      "skills": ["skill1", "skill2"]
-    }
+    {"project": "Project", "difficulty": "Easy|Medium|Hard", "duration": "X weeks", "skills": ["skill1"]}
   ]
 }
 
-Make sure:
-- Include 4 topics for ${level} level
-- Each topic has 3-4 subtopics
-- Each topic has 2-3 resources
-- Include 3-4 practical projects
-- Projects have appropriate difficulty for ${level} level
-- Difficulties progress from Easy to Hard
-- Return valid JSON only, no extra text`;
+Include 4 topics, 3-4 practical projects. Valid JSON only.`;
 
-    const response = await askGemini(prompt);
+    const response = await askGemini(prompt, { skill, level, branch, year, type: 'roadmap' });
     const roadmap = extractJSON(response);
 
     if (!roadmap || !roadmap.topics || !roadmap.practical) {

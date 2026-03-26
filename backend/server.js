@@ -40,6 +40,26 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// AI Cache stats endpoint
+app.get("/api/cache/stats", (req, res) => {
+  const { aiCache } = require("./services/aiCacheService");
+  res.json({
+    cache: aiCache.getStats(),
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Clear AI cache endpoint
+app.post("/api/cache/clear", (req, res) => {
+  const { aiCache } = require("./services/aiCacheService");
+  aiCache.clear();
+  res.json({
+    success: true,
+    message: "AI cache cleared",
+    timestamp: new Date().toISOString()
+  });
+});
+
 // ── Database Initialization ────────────────────────────
 async function initializeDatabase() {
   console.log("\n════════════════════════════════════════════════════════");
