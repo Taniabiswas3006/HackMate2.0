@@ -1,4 +1,5 @@
 import Navbar from '../components/layout/Navbar.jsx'
+import { FeaturesCards } from '../components/ui/FeaturesCards.jsx'
 import {
   ArrowRight,
   ChevronRight,
@@ -161,21 +162,7 @@ function Landing() {
               Tools and features designed to accelerate your tech journey.
             </p>
           </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {features.map((f) => (
-              <div
-                key={f.title}
-                className="rounded-2xl border border-primary/10 bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg"
-              >
-                <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${f.color}`}>
-                  <f.icon className="h-6 w-6" />
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-heading">{f.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-body">{f.desc}</p>
-              </div>
-            ))}
-          </div>
+          <FeaturesCards />
         </div>
       </section>
 
