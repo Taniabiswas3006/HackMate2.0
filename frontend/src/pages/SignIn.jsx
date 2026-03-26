@@ -37,12 +37,7 @@ function SignIn() {
 
     return (
         <div className="flex min-h-screen flex-col bg-secondary/10">
-            {/* Yellow shade decoration */}
-            <div className="absolute top-0 left-0 w-full h-64 bg-secondary/20 pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute top-1/4 left-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="flex flex-1 items-center justify-center px-4 py-16 relative">
+            <div className="flex flex-1 items-center justify-center px-4 py-16">
                 <div className="w-full max-w-md animate-fade-in-up">
                     {/* Header */}
                     <div className="mb-8 text-center">
@@ -122,8 +117,6 @@ function SignIn() {
                     </div>
                 </div>
             </div>
-
-            <Footer />
         </div>
     )
 }

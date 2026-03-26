@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User, Mail, Phone, Lock, Eye, EyeOff } from 'lucide-react'
 
-import Footer from '../components/layout/Footer.jsx'
 import Button from '../components/ui/Button.jsx'
 import { useAuth } from '../context/useAuth.js'
 import { getAllBranchInterests } from '../services/interestService.js'
@@ -98,12 +97,7 @@ function SignUp() {
 
     return (
         <div className="flex min-h-screen flex-col bg-secondary/10">
-            {/* Yellow shade decoration */}
-            <div className="absolute top-0 left-0 w-full h-64 bg-secondary/20 pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute top-1/4 left-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="flex flex-1 items-center justify-center px-4 py-12 relative">
+            <div className="flex flex-1 items-center justify-center px-4 py-12">
                 <div className="w-full max-w-lg animate-fade-in-up">
                     {/* Header */}
                     <div className="mb-8 text-center">
@@ -335,8 +329,6 @@ function SignUp() {
                     </div>
                 </div>
             </div>
-
-            <Footer />
         </div>
     )
 }
