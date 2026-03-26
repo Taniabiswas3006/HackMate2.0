@@ -199,12 +199,12 @@ function Landing() {
               {benefits.map((b) => (
                 <div
                   key={b.text}
-                  className="flex items-start gap-4 rounded-2xl border border-primary/10 bg-card p-4 shadow-soft"
+                  className="flex items-start gap-4 rounded-2xl border border-primary/10 bg-card p-4 shadow-soft hover:-translate-y-1 hover:shadow-soft-lg hover:border-primary/30 transition-all duration-300 cursor-pointer group"
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-                    <b.icon className="h-5 w-5 text-primary" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                    <b.icon className="h-5 w-5 text-primary group-hover:text-white" />
                   </div>
-                  <p className="text-sm leading-relaxed text-heading">{b.text}</p>
+                  <p className="text-sm leading-relaxed text-heading group-hover:text-primary transition-colors duration-300">{b.text}</p>
                 </div>
               ))}
             </div>
