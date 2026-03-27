@@ -7,7 +7,7 @@ function Button({
 }) {
   const variants = {
     primary:
-      'bg-primary text-white hover:bg-primary-hover shadow-soft hover:shadow-soft-lg focus-visible:ring-primary/40',
+      'bg-primary text-white shadow-soft focus-visible:ring-primary/40',
     secondary:
       'bg-secondary text-primary border border-primary/20 hover:bg-secondary/80 focus-visible:ring-secondary/30',
     ghost:

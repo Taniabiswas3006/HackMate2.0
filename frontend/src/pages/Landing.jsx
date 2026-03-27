@@ -114,13 +114,13 @@ function Landing() {
           
           <div className="mt-10 flex items-center gap-x-4">
             <Link to="/signup">
-              <Button className="px-8 py-3 text-base bg-white text-blue-600">
+              <Button className="px-8 py-3 text-base bg-primary text-blue-200">
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
             <Link to="/signin">
-              <Button variant="secondary" className="px-8 py-3 text-base bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20">
+              <Button className="px-8 py-3 text-base bg-secondary text-primary">
                 Sign In
               </Button>
             </Link>
@@ -232,7 +232,7 @@ function Landing() {
           </p>
           <div className="mt-8">
             <Link to="/signup">
-              <Button className="px-10 py-3.5 text-base bg-white text-blue-600 hover:bg-blue-50">
+              <Button className="px-10 py-3.5 text-base bg-primary text-blue-200">
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

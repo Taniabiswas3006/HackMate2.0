@@ -15,6 +15,7 @@ function Navbar() {
     { name: 'Roadmap', href: '/roadmap' },
     { name: 'Events', href: '/events' },
     { name: 'Peers', href: '/peers' },
+    { name: 'Achievements', href: '/achievements' },
   ]
 
   return (

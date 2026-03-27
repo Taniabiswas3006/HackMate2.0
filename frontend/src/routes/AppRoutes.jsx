@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
+import Achievements from '../pages/Achievements.jsx'
 import DashboardLayout from '../components/layout/DashboardLayout.jsx'
 import Dashboard from '../pages/Dashboard.jsx'
 import Landing from '../pages/Landing.jsx'
@@ -24,6 +25,7 @@ function AppRoutes() {
         <Route path="/peers" element={<Peers />} />
         <Route path="/peers/:id" element={<PeerProfile />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/achievements" element={<Achievements />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
